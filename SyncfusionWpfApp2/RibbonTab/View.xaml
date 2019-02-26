@@ -1,0 +1,103 @@
+<syncfusion:RibbonTab x:Class="SyncfusionWpfApp2.View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SyncfusionWpfApp2"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d" x:Name="ViewTab" Caption="View"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <syncfusion:RibbonBar x:Name="currentViewBar" Header="Current View">
+        <syncfusion:DropDownButton x:Name="changeView" IconType="VectorImage" SizeForm="Large"  Label="Change View">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path x:Name="Change_view" Data="F1M193.0068,264L187.3508,264L193.3498,270L185.1788,270C181.8698,270,179.1788,267.309,179.1788,264C179.1788,260.636,181.7358,258,184.9998,258L184.9998,254C179.4928,254,175.1788,258.393,175.1788,264C175.1788,269.514,179.6648,274,185.1788,274L193.1148,274L187.2788,280L192.8598,280L200.8208,271.814z" Fill="#FF4D82B8" Height="26" Stretch="Fill" Width="25.642" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+        <syncfusion:RibbonButton x:Name="viewSettings" IconType="VectorImage" SizeForm="Large" Label="View Settings">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path x:Name="View_settings" Data="M9.5,16.999991 C7.565979,16.999991 6,18.566978 6,20.499991 6,22.433005 7.565979,23.999991 9.5,23.999991 11.434021,23.999991 13,22.433005 13,20.499991 13,18.566978 11.434021,16.999991 9.5,16.999991 z M9,10.999991 L10,10.999991 C10.552978,10.999991 11,11.446982 11,11.999991 L11,14.180991 C11.684998,14.342978 12.325012,14.611991 12.906006,14.971977 L14.450012,13.428977 C14.840027,13.037986 15.473999,13.037986 15.864014,13.428977 L16.570984,14.135978 C16.961975,14.525992 16.961975,15.159995 16.570984,15.549979 L15.028015,17.093986 C15.388,17.674979 15.656982,18.314994 15.81897,18.999991 L18,18.999991 C18.552978,18.999991 19,19.446982 19,19.999991 L19,20.999991 C19,21.553 18.552978,21.999991 18,21.999991 L15.81897,21.999991 C15.656982,22.684989 15.388,23.325004 15.028015,23.905997 L16.570984,25.448997 C16.961975,25.839988 16.961975,26.47399 16.570984,26.864005 L15.864014,27.571006 C15.473999,27.961997 14.840027,27.961997 14.450012,27.571006 L12.906982,26.028007 C12.325012,26.387992 11.684998,26.657004 11,26.818992 L11,28.999991 C11,29.553 10.552978,29.999991 10,29.999991 L9,29.999991 C8.4470215,29.999991 8,29.553 8,28.999991 L8,26.818992 C7.3150024,26.657004 6.6749878,26.387992 6.0930176,26.028007 L4.5499878,27.571006 C4.1599731,27.961997 3.526001,27.961997 3.1359865,27.571006 L2.4290163,26.864005 C2.0380249,26.47399 2.0380249,25.839988 2.4290163,25.448997 L3.9719848,23.905997 C3.6119995,23.325004 3.3430176,22.684989 3.1810302,21.999991 L1.0000001,21.999991 C0.44702146,21.999991 -2.3842913E-08,21.553 1.7763568E-15,20.999991 L1.7763568E-15,19.999991 C-2.3842913E-08,19.446982 0.44702146,18.999991 1.0000001,18.999991 L3.1810302,18.999991 C3.3430176,18.314994 3.6119995,17.674979 3.9719848,17.093986 L2.4290163,15.549979 C2.0380249,15.159995 2.0380249,14.525992 2.4290163,14.135978 L3.1359865,13.428977 C3.526001,13.037986 4.1599731,13.037986 4.5499878,13.428977 L6.0939941,14.971977 C6.6749878,14.611991 7.3150024,14.342978 8,14.180991 L8,11.999991 C8,11.446982 8.4470215,10.999991 9,10.999991 z M19,4.421 C17.575001,4.421 16.421,5.5759997 16.421,6.9999998 16.421,8.4239998 17.575001,9.5789999 19,9.5789999 20.424999,9.5789999 21.579,8.4239998 21.579,6.9999998 21.579,5.5759997 20.424999,4.421 19,4.421 z M18.632,0 L19.368,0 C19.775,0 20.105,0.32999992 20.105,0.73699951 L20.105,2.3509998 C20.607,2.4709997 21.076,2.6700001 21.503,2.9329996 L22.646999,1.7889996 C22.934999,1.5019999 23.400999,1.5019999 23.688999,1.7889996 L24.209999,2.3099995 C24.497999,2.599 24.497999,3.0650001 24.209999,3.3519998 L23.066,4.4959998 C23.33,4.9239998 23.528999,5.3919997 23.648001,5.8940001 L25.264,5.8940001 C25.67,5.8940001 26,6.2249999 26,6.632 L26,7.3679998 C26,7.7749999 25.67,8.1049998 25.264,8.1049998 L23.648001,8.1049998 C23.528999,8.6069999 23.33,9.0759999 23.066,9.5029999 L24.209999,10.647 C24.497999,10.934 24.497999,11.401 24.209999,11.689 L23.688999,12.21 C23.400999,12.498 22.934999,12.498 22.646999,12.21 L21.503,11.066 C21.076,11.33 20.607,11.529 20.105,11.648 L20.105,13.263 C20.105,13.67 19.775,14 19.368,14 L18.632,14 C18.225,14 17.895,13.67 17.895,13.263 L17.895,11.648 C17.393,11.529 16.924,11.33 16.497,11.066 L15.353,12.21 C15.065,12.498 14.599,12.498 14.311,12.21 L13.79,11.689 C13.502,11.401 13.502,10.934 13.79,10.647 L14.934,9.5029999 C14.67,9.0759999 14.471,8.6069999 14.352,8.1049998 L12.736,8.1049998 C12.33,8.1049998 12,7.7749999 12,7.3679998 L12,6.632 C12,6.2249999 12.33,5.8940001 12.736,5.8940001 L14.352,5.8940001 C14.471,5.3919997 14.67,4.9239998 14.934,4.4959998 L13.79,3.3519998 C13.502,3.0650001 13.502,2.599 13.79,2.3099995 L14.311,1.7889996 C14.599,1.5019999 15.065,1.5019999 15.353,1.7889996 L16.497,2.9329996 C16.924,2.6700001 17.393,2.4709997 17.895,2.3509998 L17.895,0.73699951 C17.895,0.32999992 18.225,0 18.632,0 z" Fill="Gray" HorizontalAlignment="Right"  Stretch="Fill" Width="26"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+        <syncfusion:RibbonButton x:Name="resetView" IconType="VectorImage" SizeForm="Large" Label="Reset View">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path x:Name="Reset_View" Data="F1M266.7148,264.9712C265.1188,262.3102,262.7648,260.9332,259.9558,261.0002C255.9238,261.0892,251.8348,264.4882,248.9998,267.4752L248.9998,259.0002L244.9998,263.0002L244.9998,275.0002L255.9998,275.0002L259.9998,271.0002L251.2048,271.0002C253.6948,268.2482,257.2448,265.0612,260.0438,264.9992C260.9738,264.9732,262.1828,265.1912,263.2848,267.0292C263.6398,267.6212,263.9998,269.1752,263.9998,271.0002L267.9998,271.0002C267.9998,268.5662,267.5198,266.3122,266.7148,264.9712" Fill="#FF4D82B8" Height="16" Stretch="Fill" Width="23" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+
+    </syncfusion:RibbonBar>
+    <syncfusion:RibbonBar x:Name="messagesBar" Header="Message">
+        <syncfusion:RibbonCheckBox x:Name="showConversations" Content="Show As Conversations"/>
+        <syncfusion:DropDownButton IsEnabled="False" HorizontalAlignment="Left" x:Name="conversationSettings" IconType="VectorImage" SizeForm="Small"  Label="Conversation Settings">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path Data="M0,1.7069993 L4.2930002,6 6.7069998,6 11,1.7069993 11,8 0,8 z M0,0 L11,0 11,0.29299916 6.2929993,5 4.7070007,5 0,0.29299916 z" Fill="#FFDAD6DA" Height="8" Margin="5,0,0,0" Stretch="Fill" VerticalAlignment="Bottom" />
+                <Path Data="F1M441,266.707L441,265.293L441,265L451.5,265L451.5,263.5L446.533,260.5L444.467,260.5L439.5,263.5L439.5,271.5L441,271.5z" Fill="#FFF7F2F7" Stretch="Fill" Margin="2.5,2.5,1.5,2.5"/>
+                <Path Data="M7.3279915,2 L9.6719913,2 14.999991,5.218 14.999991,7 13.999991,7 13.999991,5.7820001 9.3939915,3 7.6059914,3 2.9999917,5.7820001 2.9999917,7 3.9999917,7 3.9999917,8 2.9999917,8 2.9999917,13 3.9999917,13 3.9999917,14 1.9999915,14 1.9999915,5.218 z M5.3280029,0 L6.5,0 6.5,1 5.6059875,1 1,3.782013 1,12 0,12 0,3.2179871 z" Fill="#FFB0ADB0" Margin="0,0,1,2" Stretch="Fill"/>
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+
+    </syncfusion:RibbonBar>
+    <syncfusion:RibbonBar x:Name="layoutBar" Header="Layout">
+        <syncfusion:DropDownButton x:Name="folderPane" IconType="VectorImage" SizeForm="Large"  Label="Folder Pane">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path Data="F1M675,258L703,258L703,279L675,279z" Fill="Gray" Stretch="Fill" Margin="0,4,0,0"/>
+                <Path Data="M10,0 L26,0 26,19 10,19 z M0,0 L9,0 9,19 0,19 z" Fill="White" Margin="1,5,1,1" Stretch="Fill"/>
+                <Path Data="M1.9999999,20 L9,20 9,21 1.9999999,21 z M1.9999999,17 L9,17 9,18 1.9999999,18 z M1.9999999,9.9999999 L9,9.9999999 9,11 1.9999999,11 z M1.9999999,6.9999999 L9,6.9999999 9,7.9999999 1.9999999,7.9999999 z M0,0 L28,0 28,4.9999999 0,4.9999999 z" Fill="#FF4D82B8" Margin="0,0,0,4" Stretch="Fill" />
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+        <syncfusion:DropDownButton x:Name="readingPane" IconType="VectorImage" SizeForm="Large"  Label="Reading Pane">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path Data="F1M720,258L748,258L748,280L720,280z" Fill="Gray" Stretch="Fill" Margin="0,4,0,0"/>
+                <Path Data="M11,0 L26,0 26,20 11,20 z M0,0 L10,0 10,20 0,20 z" Fill="White" Margin="1,5,1,1" Stretch="Fill"/>
+                <Path Data="M13,21 L26,21 26,22 13,22 z M13,18 L26,18 26,19 13,19 z M13,15 L26,15 26,16 13,16 z M13,12 L26,12 26,13 13,13 z M13,9.0000003 L26,9.0000003 26,10 13,10 z M0,0 L28,0 28,5.0000003 0,5.0000003 z" Fill="#FF4D82B8" Margin="0,0,0,4" Stretch="Fill" />
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+        <syncfusion:DropDownButton x:Name="todoBar" IconType="VectorImage" SizeForm="Large"  Label="To-Do Bar">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path Data="F1M765,258L793,258L793,279L765,279z" Fill="Gray" Stretch="Fill" Margin="0,4,0,0"/>
+                <Path Data="F1M766,259L792,259L792,278L766,278z" Fill="White" Stretch="Fill" Margin="1,5,1,1"/>
+                <Path Data="M2.9999998,15 L9.9999998,15 9.9999998,16 2.9999998,16 z M2.9999998,12 L9.9999998,12 9.9999998,13 2.9999998,13 z M2.9999998,9 L9.9999998,9 9.9999998,10 2.9999998,10 z M0,0 L0.99999982,0 0.99999982,19 0,19 z" Fill="#FFB3B3B3" HorizontalAlignment="Right" Margin="0,5,3,1" Stretch="Fill" Width="10"/>
+                <Path Data="M19,7.9999999 L19,11 24,11 24,7.9999999 z M18,6.9999999 L25,6.9999999 25,12 18,12 z M0,0 L28,0 28,5 0,5 z" Fill="#FF4D82B8" Height="12" Stretch="Fill" VerticalAlignment="Top"/>
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+
+    </syncfusion:RibbonBar>
+    <syncfusion:RibbonBar x:Name="peopleBar" Header="People">
+        <syncfusion:DropDownButton x:Name="peoplePane" IconType="VectorImage" SizeForm="Large"  Label="People Pane">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path Data="F1M815,258L843,258L843,280L815,280z" Fill="Gray" Stretch="Fill" Margin="0,4,0,0"/>
+                <Path Data="M11,11 L26,11 26,20 11,20 z M11,0 L26,0 26,10 11,10 z M0,0 L10,0 10,20 0,20 z" Fill="White" Margin="1,5,1,1" Stretch="Fill"/>
+                <Path Data="M19,22 L26,22 26,23 19,23 z M19,20 L26,20 26,21 19,21 z M14,19 L14,22 17,22 17,19 z M19,18 L26,18 26,19 19,19 z M13,18 L18,18 18,23 13,23 z M0,0 L28,0 28,4.9999999 0,4.9999999 z" Fill="#FF4D82B8" Margin="0,0,0,3" Stretch="Fill" />
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+
+    </syncfusion:RibbonBar>
+    <syncfusion:RibbonBar x:Name="windowBar" Header="Window">
+        <syncfusion:RibbonButton x:Name="remainderWindow" IconType="VectorImage" SizeForm="Large" Label="Remainder Window">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path x:Name="Reminders_Window" Data="M8.3490078,23 L14.64902,23 C14.086019,24.18 12.893017,25 11.499014,25 10.105011,25 8.912009,24.18 8.3490078,23 z M2.5060036,15.498996 C4.8250067,16.431993 7.9740107,16.999994 11.500015,16.999994 15.02502,16.999994 18.173024,16.431993 20.492028,15.498996 20.782028,16.066995 21.099028,16.621994 21.469029,17.144993 L23.000031,19.312992 C21.74103,21.00399 15.758022,21.999988 13.650018,21.999988 L9.9860137,21.999988 C7.4160101,21.999988 1.9340029,21.067989 0,19.37499 L1.6270024,17.002994 C1.9560029,16.522995 2.2420033,16.015995 2.5060036,15.498996 z M11.50002,0 C15.642011,-1.2701094E-07 18.999975,3.3580016 18.999975,7.4999999 L18.999975,9.3640135 C18.999975,10.450989 19.131018,11.532989 19.390967,12.587005 L19.390967,12.588013 C19.561011,13.282013 19.798008,13.95401 20.074009,14.608002 17.976967,15.437012 15.025007,16 11.50002,16 7.9730184,16 5.020021,15.436005 2.9230096,14.606995 3.1910143,13.970001 3.4210249,13.317016 3.5890237,12.644012 L3.5970197,12.610992 C3.8650243,11.541015 4.0000337,10.442016 4.0000339,9.3389891 L4.0000339,7.4999999 C4.0000337,3.3580016 7.3579986,-1.2701094E-07 11.50002,0 z" Fill="#FFEDC87E" HorizontalAlignment="Left" Height="25"  Stretch="Fill" VerticalAlignment="Top" Width="23"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+
+        <syncfusion:RibbonButton x:Name="openNewWindow" IconType="VectorImage" SizeForm="Large" Label="Open In New Window">
+            <syncfusion:RibbonButton.VectorImage>
+
+                <Path Data="M9.9999996,17 L27,17 27,31 9.9999996,31 z M0,6 L17,6 17,16 9.0000001,16 9.0000001,20 0,20 z M8.9999997,0 L26,0 26,14 18,14 18,5 8.9999997,5 z" Fill="Gray" Stretch="Fill"/>
+                <Path Data="F1M898,272L881,272L881,268L898,268z" Fill="#FF4D82B8" Height="4" Stretch="Fill" Margin="10,0,0,10" VerticalAlignment="Bottom"/>
+                <Path Data="M10,17 L25,17 25,26 10,26 z M0,6 L15,6 15,12 8,12 8,15 0,15 z M9.0000002,0 L24,0 24,9 17,9 17,1 9.0000002,1 z" Fill="White" Margin="1,4,1,1" Stretch="Fill"/>
+
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+        <syncfusion:RibbonButton x:Name="closeAll" IconType="VectorImage" SizeForm="Large" Label="Close All Items">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path Data="M6.0000001,7.0000002 L28,7.0000002 28,15 17,15 C15.895996,15 15,15.895996 15,17 L15,27 6.0000001,27 z M0,0 L22,0 22,5.9999998 5.0000001,5.9999998 5.0000001,20 0,20 z" Fill="#FF727272" Margin="0,0,2,3" Stretch="Fill"/>
+                <Path Data="M6,6.9999999 L26,6.9999999 26,18 25,18 24,18 23,18 23,19 22,19 22,20 21,20 21,19 20,19 20,18 19,18 18,18 17,18 17,19 18,19 18,20 19,20 19,21 20,21 20,22 19,22&#xd;&#xa;19,23 18,23 18,24 17,24 17,25 6,25 z M0,0 L20,0 20,5 4.0000001,5 4.0000001,18 0,18 z" Fill="White" Margin="1,1,3,4" Stretch="Fill"/>
+                <Path Data="F1M573,343L572,343L572,344L571,344L571,345L572,345L572,346L573,346L573,347L574,347L574,342L573,342z" Fill="White" Height="5" Stretch="Fill" Width="3" HorizontalAlignment="Right" Margin="0,0,3,5" VerticalAlignment="Bottom"/>
+                <Path Data="F1M574,342L573,342L573,343L572,343L572,344L571,344L571,345L572,345L572,346L573,346L573,347L574,347L574,348L573,348L572,348L571,348L570,348L570,347L569,347L569,348L568,348L567,348L566,348L565,348L565,347L566,347L566,346L567,346L567,345L568,345L568,344L567,344L567,343L566,343L566,342L565,342L565,341L566,341L567,341L568,341L568,342L569,342L569,343L570,343L570,342L571,342L571,341L572,341L573,341L574,341z M575,337L564,337C562.896,337,562,337.896,562,339L562,350C562,351.104,562.896,352,564,352L575,352C576.104,352,577,351.104,577,350L577,339C577,337.896,576.104,337,575,337" Fill="#FFD65532" Stretch="Fill" Width="15" HorizontalAlignment="Right" Height="15" VerticalAlignment="Bottom"/>
+                <Path Data="F1M575,329L553,329L553,333L575,333z" Fill="#FF4A7DB1" Height="4" Stretch="Fill" Margin="6,7,2,0" VerticalAlignment="Top"/>
+                <Path Data="F1M569,322L547,322L547,326L569,326z" Fill="Gray" Height="4" Stretch="Fill" Margin="0,0,8,0" VerticalAlignment="Top"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+    </syncfusion:RibbonBar>
+
+</syncfusion:RibbonTab>

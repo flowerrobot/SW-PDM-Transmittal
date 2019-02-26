@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F62492F0-583B-4170-A8CF-D1093547F604}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SyncfusionWpfApp1</RootNamespace>
+    <AssemblyName>SyncfusionWpfApp1</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Syncfusion.SfSkinManager.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Shared.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Themes.Metro.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Tools.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="SkinCombo.xaml.cs">
+      <DependentUpon>SkinCombo.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DockingManagerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BooleanToVisibility.cs" />
+    <Compile Include="DockingManagerWindow.xaml.cs">
+      <DependentUpon>DockingManagerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="SkinCombo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPFControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Border.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Canvas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CheckBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ClassView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ComboBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ContentControl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CSharp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DockPanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DocumentViewer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Ellipse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ErrorList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Expander.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FindResults.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FindSymbolResults.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Folder_Collapsed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Folder_Expanded.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Frame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Grid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GridSplitter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GroupBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Label.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Linked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ListBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ListView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MediaElement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Output.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PasswordBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pointer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ProgressBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Project.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Properties.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Properties_Collapsed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\RadioButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Reference.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\References_Collapsed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\References_Expanded.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Resources.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\RichTextBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ScrollBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ScrollViewer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Separator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Slider.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Solution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StackPanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StatusBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TabControl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextBlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ToolBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Toolbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TransparentBackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TreeView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\UniformGrid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ViewBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WindowsFormsHost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WrapPanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Xaml.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

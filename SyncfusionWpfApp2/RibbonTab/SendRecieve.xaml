@@ -1,0 +1,68 @@
+<syncfusion:RibbonTab x:Class="SyncfusionWpfApp2.SendRecieve"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SyncfusionWpfApp2"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d" x:Name="SendTab" Caption="Send/Receive"
+             >
+    <syncfusion:RibbonBar x:Name="sendRecieveBar" Header="Send and Receive">
+        <syncfusion:RibbonButton x:Name="sendReceive" IconType="VectorImage" SizeForm="Large" Label="Send/Recieve All Folders">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path Data="M3,23 L5,23 5,24 3,24 z M2,20 L5,20 5,21 2,21 z M1,17 L5,17 5,18 1,18 z M6,13 L28,13 28,27 6,27 z M23,7.9999998 L25,7.9999998 25,8.9999998 23,8.9999998 z M23,4.9999998 L26,4.9999998 26,5.9999998 23,5.9999998 z M23,1.9999999 L27,1.9999999 27,2.9999999 23,2.9999999 z M0,0 L22,0 22,12 5,12 5,14 0,14 z" Fill="Gray" Stretch="Fill"/>
+                <Path Data="M6,13 L26,13 26,25 6,25 z M0,0 L20,0 20,11 4.0000001,11 4.0000001,12 0,12 z" Fill="White" Margin="1" Stretch="Fill"/>
+                <Path Data="M2,21 L4,21 4,22 2,22 z M1,18 L4,18 4,19 1,19 z M0,15 L4,15 4,16 0,16 z M22,5.9999995 L24,5.9999995 24,6.9999995 22,6.9999995 z M22,2.9999995 L25,2.9999995 25,3.9999993 22,3.9999993 z M22,0 L26,0 26,0.9999995 22,0.9999995 z" Fill="#FFC6C6C6" Margin="1,3,1,2" Stretch="Fill"/>
+                <Path Data="M6,13 L9,13 9,17 6,17 z M0,0 L3,0 3,4 0,4 z" Fill="#FF4D82B8" HorizontalAlignment="Right" Margin="0,2,2,8" Stretch="Fill" Width="9"/>
+                <Path Data="M6,15 L15,15 15,16 6,16 z M6,13 L16,13 16,14 6,14 z M0,2 L9,2 9,3 0,3 z M0,0 L10,0 10,1 0,1 z" Fill="#FFB3B3B3" Margin="4,7,8,4" Stretch="Fill"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+        <syncfusion:RibbonButton x:Name="updateFolder" IconType="VectorImage" SizeForm="Small" Label="update Folder">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path Data="F1M557,356L562,356L562,355L557,355z" Fill="White" Height="1" Stretch="Fill" Width="5" HorizontalAlignment="Right" Margin="0,1,2,0" VerticalAlignment="Top"/>
+                <Path Data="F1M562,354L557,354L557,355L562,355L562,356L557,356L557,355L556,355L556,356L549,356C548.447,356,548,356.448,548,357L548,367L553.042,367L553.061,365.675C553.033,365.452,553,365.23,553,365C553,364.676,553.033,364.36,553.083,364.049L553.084,364L553.09,364C553.568,361.167,556.033,359,559,359C560.537,359,561.938,359.586,563,360.541L563,356L563,354z" Fill="#FFEAC282" Stretch="Fill" Margin="0,0,1,2.5"/>
+                <Path Data="M0,4.5 L0.99999699,4.5 1.999994,4.5 3.999988,4.5 3.999988,5.5 2.1849934,5.5 C2.5989922,6.6620002 3.6979889,7.5 4.9999849,7.5 6.3019812,7.5 7.4009778,6.6620002 7.8149764,5.5 L9.3789718,5.5 C8.9219729,7.5 7.1369783,9 4.9999849,9 3.2479901,9 1.7429947,7.9829998 0.99999699,6.5180001 L0.99999699,8.5 0,8.5 z M4.9999768,0 C6.7519857,1.4834593E-08 8.2569863,1.0169983 8.9999644,2.4809876 L8.9999644,0.49999999 9.9999616,0.49999999 9.9999616,4.5 8.9999644,4.5 7.9999678,4.5 5.999974,4.5 5.999974,3.5 7.8149707,3.5 C7.4009706,2.3380127 6.301975,1.5 4.9999768,1.5 3.6979789,1.5 2.5989833,2.3380127 2.1849832,3.5 L0.62096193,3.5 C1.0779918,1.5 2.8629596,1.4834593E-08 4.9999768,0 z" Fill="#FF68A490" Margin="6,6.5,0,0" Stretch="Fill"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+        <syncfusion:RibbonButton x:Name="sendAll" IconType="VectorImage" SizeForm="Small" Label="Send All">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path Data="F1M626.5,365.5L616.5,365.5L616.5,357.5L626.5,357.5z" Fill="White" Stretch="Fill" Margin="5.5,2.5,0.5,0.5"/>
+                <Path Data="F1M625,361L623,361L623,359L625,359z" Fill="#FF4A7DB1" Stretch="Fill" Width="2" HorizontalAlignment="Right" Margin="0,4,2,5"/>
+                <Path Data="M0,2 L3,2 3,3 0,3 z M0,0 L4,0 4,1 0,1 z" Fill="#FFB3B3B3" Height="3" Margin="7,0,5,2" Stretch="Fill" VerticalAlignment="Bottom" />
+                <Path Data="M0,5 L2,5 2,6 0,6 z M6,3 L6,10 15,10 15,3 z M5,2 L16,2 16,11 5,11 z M0,2 L2,2 2,3 0,3 z M3,0 L15,0 15,1 4,1 4,9 3,9 z" Fill="#FF727272" Stretch="Fill"/>
+                <Path Data="M0,3 L2,3 2,4 0,4 z M0,0 L2,0 2,1 0,1 z" Fill="#FFBDBDBD" HorizontalAlignment="Left" Margin="0,3,0,4" Stretch="Fill" Width="2" />
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+        <syncfusion:DropDownButton x:Name="sendGroups" IconType="VectorImage" HorizontalAlignment="Left" SizeForm="Small" Label="Send/Receive Groups">
+            <syncfusion:DropDownButton.VectorImage>
+                <Path Data="M0,6.5 L11,6.5 11,14.5 0,14.5 z M4.4999999,0 L9.5,0 9.5,1.0000001 4.4999999,1.0000001 z" Fill="White" Margin="4.5,1,0.5,0.5" Stretch="Fill"/>
+                <Path Data="F1M681,368L691,368L691,361L681,361z M692,369L680,369L680,360L692,360z" Fill="#FF727272" Stretch="Fill" Margin="4,7,0,0"/>
+                <Path Data="F1M690,364L688,364L688,362L690,362z" Fill="#FF4D82B8" Height="2" Stretch="Fill" Width="2" HorizontalAlignment="Right" Margin="0,0,2,5" VerticalAlignment="Bottom"/>
+                <Path Data="M0,2 L4,2 4,3 0,3 z M0,0 L5,0 5,1 0,1 z" Fill="#FFB3B3B3" Height="3" Margin="6,0,5,2" Stretch="Fill" VerticalAlignment="Bottom"/>
+                <Path Data="M9,0 L14,0 15,0 15,2 15,6 3,6 3,13 0,13 0,3 C0,2.447998 0.44702148,2 0.99999994,2 L8,2 8,1.0000001 9,1.0000001 9,2 14,2 14,1.0000001 9,1.0000001 z" Fill="#FFEAC282" Margin="0,0,1,3" Stretch="Fill" />
+            </syncfusion:DropDownButton.VectorImage>
+        </syncfusion:DropDownButton>
+    </syncfusion:RibbonBar>
+    <syncfusion:RibbonBar x:Name="downloadBar" Header="Download">
+        <syncfusion:RibbonButton x:Name="showProgress" IconType="VectorImage" SizeForm="Large" Label="Show Progress">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path Data="F1M250,349L222,349L222,344L250,344z" Fill="#FF4D82B8" Height="5" Stretch="Fill" VerticalAlignment="Top"/>
+                <Path Data="F1M250,369L222,369L222,349L250,349z" Fill="Gray" Stretch="Fill" Margin="0,5,0,0"/>
+                <Path Data="F1M249,368L223,368L223,349L249,349z" Fill="White" Stretch="Fill" Margin="1,5,1,1"/>
+                <Path Data="M1,8.9999999 L1,12 21,12 21,8.9999999 z M0,7.9999999 L22,7.9999999 22,13 0,13 z M1,1 L1,4 21,4 21,1 z M0,0 L22,0 22,5 0,5 z" Fill="Gray" Margin="3,8,3,4" Stretch="Fill" />
+                <Path Data="M0,7.9999999 L17,7.9999999 17,13 0,13 z M0,0 L12,0 12,5 0,5 z" Fill="#FF76A797" Margin="3,8,8,4" Stretch="Fill" />
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+        <syncfusion:RibbonButton x:Name="cancelAll" IconType="VectorImage" SizeForm="Large" Label="Cancel All">
+            <syncfusion:RibbonButton.VectorImage>
+                <Path Data="M2.9999998,22 L4.9999998,22 4.9999998,23 2.9999998,23 z M1.9999999,19 L4.9999998,19 4.9999998,20 1.9999999,20 z M1,16 L4.9999998,16 4.9999998,17 1,17 z M6,12 L28,12 28,17.079 C27.43,16.749 26.816999,16.488 26.169001,16.306 26.112,16.29 26.054001,16.276 25.996,16.261 25.743999,16.196 25.487,16.144 25.226999,16.104 25.145,16.091 25.063999,16.077 24.982,16.066 24.66,16.027 24.333,16 24,16 23.724001,16 23.451,16.014 23.181999,16.041 19.417,16.424 16.424,19.417 16.041,23.182 16.014,23.451 16,23.724&#xd;&#xa;16,24 16,24.334 16.027,24.662 16.067,24.986 16.071,25.019 16.077,25.051 16.082,25.083 16.124,25.395 16.185,25.7 16.262,26 L6,26 z M23,8 L25,8 25,9 23,9 z M23,5 L26,5 26,6 23,6 z M23,2 L27,2 27,3 23,3 z M0,0 L22,0 22,11 4.9999998,11 4.9999998,14 0,14 z" Fill="Gray" Margin="0,0,3,5" Stretch="Fill"/>
+                <Path Data="M2,20 L4,20 4,21 2,21 z M1,17 L4,17 4,18 1,18 z M0,14 L4,14 4,15 0,15 z M22,5.9999996 L24,5.9999996 24,6.9999996 22,6.9999996 z M22,2.9999993 L25,2.9999993 25,3.9999993 22,3.9999993 z M22,0 L26,0 26,0.99999992 22,0.99999992 z" Fill="#FFC6C6C6" Margin="1,3,4,7" Stretch="Fill"/>
+                <Path Data="F1M311.957,367.543L310.543,368.957L308,366.414L305.457,368.957L304.043,367.543L306.586,365L304.043,362.457L305.457,361.043L308,363.586L310.543,361.043L311.957,362.457L309.414,365z M308,358C304.134,358,301,361.134,301,365C301,368.866,304.134,372,308,372C311.866,372,315,368.866,315,365C315,361.134,311.866,358,308,358" Fill="#FFD65532" Height="14" Stretch="Fill" Width="14" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                <Path Data="F1M305,342L285,342L285,354L289,354L289,352L305,352z" Fill="White" Height="12" Stretch="Fill" Margin="1,1,10,0" VerticalAlignment="Top"/>
+                <Path Data="F1M291,354L291,366L300.069,366C300.028,365.671,300,365.339,300,365C300,360.582,303.582,357,308,357C309.062,357,310.073,357.211,311,357.587L311,354z" Fill="White" Stretch="Fill" Margin="7,13,4,6"/>
+                <Path Data="M5.9999999,12 L9,12 9,14 5.9999999,14 z M0,0 L3,0 3,4 0,4 z" Fill="#FF4D82B8" HorizontalAlignment="Right" Margin="0,2,5,15" Stretch="Fill" Width="9"/>
+                <Path Data="M6,14 L12,14 12,15 6,15 z M6,12 L13,12 13,13 6,13 z M0,2 L9,2 9,3 0,3 z M0,0 L10,0 10,1 0,1 z" Fill="#FFB3B3B3" Margin="4,7,14,9" Stretch="Fill"/>
+            </syncfusion:RibbonButton.VectorImage>
+        </syncfusion:RibbonButton>
+    </syncfusion:RibbonBar>
+</syncfusion:RibbonTab>

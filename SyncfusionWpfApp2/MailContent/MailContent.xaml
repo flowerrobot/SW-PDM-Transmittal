@@ -1,0 +1,225 @@
+<UserControl x:Class="SyncfusionWpfApp2.MailContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:outlook="clr-namespace:SyncfusionWpfApp2"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+              xmlns:data="clr-namespace:Syncfusion.Data;assembly=Syncfusion.Data.WPF"
+             xmlns:skin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+             mc:Ignorable="d" skin:SfSkinManager.VisualStyle="Office2016Colorful"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <outlook:ForegroundConverter x:Key="foregroundConverter"/>
+        <outlook:IndentColumnConverter x:Key="indentColumnConverter"/>
+        <outlook:FontWeightConverter x:Key="fontWeightConverter"/>
+        <outlook:ButtonConverter x:Key="buttonConverter"/>
+
+
+    </UserControl.Resources>
+    <Grid x:Name="MailGrid" Margin="3,11,3,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="sf:GridCell">
+                <Setter Property="BorderThickness" Value="0,0.5,0,0.5"/>
+                <Setter Property="Margin" Value="0,-1,0,0"/>
+            </Style>
+            <Style TargetType="sf:GridCaptionSummaryCell">
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="Background" Value="LightGray"></Setter>
+            </Style>
+            <Style TargetType="sf:CaptionSummaryRowControl">
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Setter Property="BorderBrush" Value="#FFC8C8C8"/>
+                <Setter Property="Background" Value="LightGray"></Setter>
+            </Style>
+            <ControlTemplate x:Key="GridIndentCellControlTemplate" TargetType="sf:GridIndentCell">
+                <Border x:Name="PART_GridIndentCellBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="BorderStates">
+                            <VisualState x:Name="DataRow" />
+                            <VisualState x:Name="SummaryRow" />
+                            <VisualState x:Name="UnBoundRow">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0,0,1,1" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="FilterRow">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0,0,1,1" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="AddNewRow">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0,0,1,1" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="TableSummaryRow">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Expander_Collapsed">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,1" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="After_Expander">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,1" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Before_Expander">
+                                <!--<Storyboard BeginTime="0">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                <EasingThicknessKeyFrame KeyTime="0" Value="0,0,1,0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>-->
+                            </VisualState>
+                            <VisualState x:Name="Expander_Expanded">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,0" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Last_GroupRow">
+                            <Storyboard BeginTime="0">
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PART_GridIndentCellBorder" Storyboard.TargetProperty="(Border.BorderThickness)">
+                                    <EasingThicknessKeyFrame KeyTime="0" Value="0,0,0,1" />
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                            <VisualState x:Name="Fixed_NormalCell">
+                                <Storyboard BeginTime="0">
+                                    <ThicknessAnimationUsingKeyFrames BeginTime="0"
+                                                                          Duration="1"
+                                                                          Storyboard.TargetName="PART_GridIndentCellBorder"
+                                                                          Storyboard.TargetProperty="BorderThickness">
+                                        <EasingThicknessKeyFrame KeyTime="0" Value="0, 1, 0, 1" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <ContentPresenter VerticalAlignment="Center" SnapsToDevicePixels="True" />
+                </Border>
+            </ControlTemplate>
+            <Style TargetType="sf:GridIndentCell">
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="BorderBrush" Value="#FFC8C8C8"/>
+                <Setter Property="Template" Value="{StaticResource GridIndentCellControlTemplate}"/>
+                <Setter Property="Background" Value="{Binding Path=IsNew, Mode=TwoWay, Converter={StaticResource indentColumnConverter}}" />
+            </Style>
+            <outlook:GroupDataTimeConverter x:Key="customGroupDateTimeConverter" />
+            <outlook:CustomSortComparer x:Key="customSortComparer" />
+        </Grid.Resources>
+
+        <sf:SfDataGrid MinWidth="330" x:Name="SfGrid" ShowSortNumbers="True" 
+                                   Margin="3,-3,3,1" 
+                                   BorderThickness="0,0,0,0"
+                                   AllowFrozenGroupHeaders="True"
+                                   AutoGenerateColumns="False"
+                                   AutoExpandGroups="True"
+                                   SelectionUnit="Row" 
+                                   SelectionMode="Single" 
+                                   GroupCaptionTextFormat=" {Key}"
+                                   ItemsSource="{Binding CategoryMails}"
+                                   ShowColumnWhenGrouped="False"
+                       SelectedItem="{Binding SelectedMail}">
+            <interactivity:Interaction.Behaviors>
+                <outlook:SelectionBehaviour/>
+            </interactivity:Interaction.Behaviors>
+            <sf:SfDataGrid.SortComparers>
+                <data:SortComparer  Comparer="{StaticResource customSortComparer}" PropertyName="Date" />
+            </sf:SfDataGrid.SortComparers>
+            <sf:SfDataGrid.GroupColumnDescriptions>
+                <sf:GroupColumnDescription ColumnName="Date" Converter="{StaticResource customGroupDateTimeConverter}" />
+            </sf:SfDataGrid.GroupColumnDescriptions>
+            <sf:SfDataGrid.Columns>
+                <sf:GridTextColumn TextWrapping="Wrap" HeaderText="" Width="330">
+                    <sf:GridTextColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Height="50">
+                                <StackPanel >
+                                    <TextBlock Padding="1" Text="{Binding From}" Margin="0,8,0,3" FontSize="14" FontFamily="Calibiri"></TextBlock>
+                                    <TextBlock Padding="1" Text="{Binding Path=Content}" FontSize="11" FontFamily="Calibiri" TextTrimming="WordEllipsis"
+                                               FontWeight="{Binding Path=IsNew, Mode=TwoWay, Converter={StaticResource fontWeightConverter}}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </sf:GridTextColumn.CellTemplate>
+                </sf:GridTextColumn>
+                <sf:GridTextColumn MappingName="Date"/>
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
+        <Border Background="#FFD4D4D4"   Width="1.2" Grid.Column="1"/>
+        
+        <Grid x:Name="CotentGrid" Grid.Column="2" Margin="7,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Margin="0,0,0,5">
+                    <StackPanel Orientation="Horizontal" >
+                        <sf:RibbonButton x:Name="Reply" Label="Reply" SmallIcon="{x:Null}" Padding="3"/>
+                        <sf:RibbonButton x:Name="ReplyAll" Label="Reply All" SmallIcon="{x:Null}" Padding="3"/>
+                        <sf:RibbonButton x:Name="Forward" Label="Forward" SmallIcon="{x:Null}" Padding="3"/>
+                        <sf:RibbonButton x:Name="IM" Label="IM" SmallIcon="{x:Null}" Padding="3"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle  Fill="#FFD4D4D4" Height="80" Width="70"/>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Bottom">
+                        <TextBlock x:Name="From" Text="{Binding From}" FontSize="30" Margin="3,0,0,0"/>
+                        <TextBlock x:Name="Subject" Text="{Binding Subject, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <TextBlock Text="To:" Width="20"/>
+                        <TextBlock x:Name="To" Text="{Binding To}" FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="3" Background="#FFD4D4D4" Height="1.2"/>
+            </Grid>
+            <Grid Grid.Row="1" >
+                <outlook:SfRichTextBoxAdvExtension x:Name="richTextBoxAdv" IsReadOnly="True" LayoutType="Continuous"  HtmlText="{Binding MailContent}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransmitalManager", "TransmitalManager\TransmitalManager.csproj", "{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncfusionWpfApp1", "SyncfusionWpfApp1\SyncfusionWpfApp1.csproj", "{F62492F0-583B-4170-A8CF-D1093547F604}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncfusionWpfApp2", "SyncfusionWpfApp2\SyncfusionWpfApp2.csproj", "{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62492F0-583B-4170-A8CF-D1093547F604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62492F0-583B-4170-A8CF-D1093547F604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62492F0-583B-4170-A8CF-D1093547F604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62492F0-583B-4170-A8CF-D1093547F604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

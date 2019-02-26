@@ -1,0 +1,284 @@
+<syncfusion:RibbonWindow x:Class="SyncfusionWpfApp2.OutlookStyleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SyncfusionWpfApp2"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" Office2010Icon="outlook.png" Icon="outlook.ico"
+        mc:Ignorable="d"  xmlns:skin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+        Title="Outlook Style" Height="350" Width="525" WindowState="Maximized" skin:SfSkinManager.VisualStyle="Office2010Blue">
+    <syncfusion:RibbonWindow.StatusBar>
+        <syncfusion:RibbonStatusBar>
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal">
+                <TextBlock Foreground="White" Text="All Folders are up to date"></TextBlock>
+            </StackPanel>
+        </syncfusion:RibbonStatusBar>
+    </syncfusion:RibbonWindow.StatusBar>
+    <syncfusion:RibbonWindow.DataContext>
+        <local:OutlookViewModel/>
+    </syncfusion:RibbonWindow.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <syncfusion:Ribbon VerticalAlignment="Top" IsQATContextMenuEnabled="True" IsQATCustomizationEnabled="True" EnableMoreCommands="True" BackStageCornerImageVisibility="Collapsed">
+          
+            <local:Home/>
+            <local:SendRecieve/>
+            <local:Folder/>
+            <local:View/>
+            
+            <syncfusion:Ribbon.BackStage>
+                <syncfusion:Backstage>
+                    <syncfusion:BackstageTabItem x:Name="openExportTab" Header="Open&amp;Export">
+                        <StackPanel Margin="30,0,0,0">
+                            <TextBlock Text="Open" FontSize="40" Foreground="#444444" FontWeight="Thin" Margin="10" />
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Button Margin="5" Width="100" Height="100">
+                                    <Viewbox Height="50" Width="50">
+                                        <Grid>
+                                            <Path Data="F1M153,547L168,547L168,536L153,536z" Fill="White" Height="11" Stretch="Fill" Margin="14.018,0,1,1" VerticalAlignment="Bottom"/>
+                                            <Path Data="F1M160,543L157,543L157,540L160,540z M156,544L161,544L161,539L156,539z" Fill="#FFE78E46" Height="5" Stretch="Fill" Width="5" HorizontalAlignment="Right" Margin="0,0,8,4" VerticalAlignment="Bottom"/>
+                                            <Path Data="M7,9 L8.0000002,9 8.0000002,11 7,11 z M3,9 L4,9 4,11 3,11 z M0,7.0000001 L2,7.0000001 2,8.0000001 0,8.0000001 z M0,3 L2,3 2,4 0,4 z M11,0 L12,0 12,3 15,3 15,4 12,4 12,7.0000001 15,7.0000001 15,8.0000001 12,8.0000001 12,11 11,11 11,8.0000001 8.9999999,8.0000001 8.9999999,7.0000001 11,7.0000001 11,4 8.9999999,4 8.9999999,3 11,3 z M7,0 L8,0 8,2 7,2 z M3,0 L4,0 4,2 3,2 z" Fill="#FFB3B3B3" Height="11" Margin="14.018,0,1,1" Stretch="Fill" VerticalAlignment="Bottom"/>
+                                            <Path Data="F1M168,547L153,547L153,536L168,536z M152,548L169,548L169,532L152,532z" Fill="Gray" Stretch="Fill" Margin="13.018,11,0,0"/>
+                                            <Path Data="F1M146.6182,528C146.2392,528,145.8932,528.214,145.7232,528.553L139.9822,540.036L139.9822,525.5C139.9822,525.225,140.2062,525,140.4822,525L151.7162,525L154.5442,522L161.5012,522C161.7762,522,162.0012,522.224,162.0012,522.5L162.0132,528z M166.5812,528L163.0132,528L163.0012,522.499C163.0002,521.672,162.3272,521,161.5012,521L154.1132,521L151.2842,524L140.4822,524C139.6552,524,138.9822,524.673,138.9822,525.5L138.9822,542L139.0002,542L148.9972,542L151.0002,542L151.0002,531L166.9292,531L167.5232,529.336C167.7552,528.686,167.2722,528,166.5812,528" Fill="#FFEAC282" Stretch="Fill" Margin="0,0,1.418,6"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Button>
+                                <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock FontWeight="Thin" FontSize="20" Text="Open Calendar"/>
+                                    <TextBlock Margin="0,5,0,0"  Text="Open a Calendar file in Outlook (.ics,.vcs)."/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Button Margin="5" Width="100" Height="100">
+                                    <Viewbox Height="50" Width="50">
+                                        <Grid>
+                                            <Path Data="F1M221.6182,528C221.2392,528,220.8932,528.214,220.7232,528.553L214.9822,540.036L214.9822,525.5C214.9822,525.225,215.2062,525,215.4822,525L226.7162,525L229.5442,522L236.5012,522C236.7762,522,237.0012,522.224,237.0012,522.5L237.0132,528z M241.5812,528L238.0132,528L238.0012,522.499C238.0002,521.672,237.3272,521,236.5012,521L229.1132,521L226.2842,524L215.4822,524C214.6552,524,213.9822,524.673,213.9822,525.5L213.9822,542L214.0002,542L214.9822,542L231.0002,542L231.0002,533C231.0002,532.447,231.4482,532,232.0002,532L241.9292,532L242.5232,529.336C242.7552,528.686,242.2722,528,241.5812,528" Fill="#FFEAC282" Stretch="Fill" Margin="0,0,1.418,7"/>
+                                            <Path Data="F1M233,548L233,534L239,534L239,538L243,538L243,548z M240,534.707L242.293,537L240,537z M239.707,533L232,533L232,549L244,549L244,537.293z" Fill="Gray" Stretch="Fill" Width="12" HorizontalAlignment="Right" Margin="0,12,0,0"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Button>
+                                <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock FontWeight="Thin" FontSize="20" Text="Open Outlook Data File"/>
+                                    <TextBlock Margin="0,5,0,0"  Text="Open an Outlook data file (.pst)."/>
+
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Button Margin="5" Width="100" Height="100">
+                                    <Viewbox Height="50" Width="50">
+                                        <Grid>
+                                            <Path Data="F1M306.3628,520L300.9998,520L305.7408,525L289.9998,525L289.9998,529L305.7408,529L300.9998,534L306.3628,534L312.9998,527z" Fill="#FF76A797" Stretch="Fill" Margin="2,0,0,11"/>
+                                            <Path Data="F1M311,536L295.259,536L300,531L294.637,531L288,538L294.637,545L300,545L295.259,540L311,540z" Fill="#FF4D82B8" Stretch="Fill" Margin="0,11,2,0"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Button>
+                                <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock FontWeight="Thin" FontSize="20" Text="Import/Export"/>
+                                    <TextBlock Margin="0,5,0,0"  Text="Import or export files and settings."/>
+
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Button Margin="5" Width="100" Height="100">
+                                    <Viewbox Height="50" Width="50">
+                                        <Grid >
+                                            <Path Data="F1M386,541L386,540L385,540L385,539L384,539L384,538L383,538L383,537L380,537L380,538L381,538L381,539L382,539L382,540L372,540L372,539L373,539L373,538L374,538L374,537L371,537L371,538L370,538L370,539L369,539L369,540L368,540L368,541L367,541L367,542L368,542L368,543L369,543L369,544L370,544L370,545L371,545L371,546L374,546L374,545L373,545L373,544L372,544L372,543L382,543L382,544L381,544L381,545L380,545L380,546L383,546L383,545L384,545L384,544L385,544L385,543L386,543L386,542L387,542L387,541z" Fill="#FF5386BB" Height="9" Stretch="Fill" Margin="10.018,0,0,0" VerticalAlignment="Bottom"/>
+                                            <Path Data="F1M364.6182,526C364.2392,526,363.8932,526.214,363.7232,526.553L357.9822,538.036L357.9822,523.5C357.9822,523.225,358.2062,523,358.4822,523L369.7162,523L372.5442,520L379.5012,520C379.7762,520,380.0012,520.224,380.0012,520.5L380.0132,526z M384.5812,526L381.0132,526L381.0012,520.499C381.0002,519.672,380.3272,519,379.5012,519L372.1132,519L369.2842,522L358.4822,522C357.6552,522,356.9822,522.673,356.9822,523.5L356.9822,540L357.0002,540L357.9822,540L367.0002,540L367.0002,539L368.0002,539L368.0002,538L369.0002,538L369.0002,537L370.0002,537L370.0002,536L376.0002,536L376.0002,538L375.0002,538L375.0002,539L379.0002,539L379.0002,538L378.0002,538L378.0002,536L381.7442,536L385.5232,527.336C385.7552,526.686,385.2722,526,384.5812,526" Fill="#FFEAC282" Stretch="Fill" Margin="0,0,1.418,6"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Button>
+                                <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock FontWeight="Thin" FontSize="20" Text="Other User's Folder"/>
+                                    <TextBlock Margin="0,5,0,0"  Text="Open a folder shared by another user."/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </syncfusion:BackstageTabItem>
+                    <syncfusion:BackstageTabItem x:Name="infoTab" Header="Info">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="25">
+                                <TextBlock Margin="15" FontSize="40" FontWeight="Thin" Foreground="#444444" Text="Account Information"/>
+                                <ComboBox Margin="15,30,15,15" SelectedIndex="0">
+                                <ComboBoxItem>
+                                    <StackPanel Orientation="Horizontal">
+                                            <Viewbox Height="30" Width="30">
+                                                <Grid>
+                                                    <Path x:Name="Microsoft_exchange" Data="M3.4170017,16.000005 L4.8750019,17.709005 3.5240021,19.694005 3.5080023,23.679006 4.0420017,24.441005 8.926002,24.466005 16.000002,17.261005 16.000002,18.238005 9.0000019,28.000006 1.0000019,28.000006 C0.44800186,28.000006 1.9073486E-06,27.563005 1.9073486E-06,27.024005 L1.9073486E-06,19.580005 z M17.261003,12 L18.237002,12 28.000002,19 28.000002,27 C28.000002,27.552002 27.563005,28 27.024004,28 L19.578997,28 16.000002,24.583008 17.70801,23.125 19.694002,24.476013 23.678011,24.492004 24.440004,23.958008 24.464998,19.074005 z M19.000002,0 L27.000002,0 C27.552002,0 28.000002,0.43700027 28.000002,0.97599983 L28.000002,8.4200001 24.583002,12 23.125002,10.292 24.476002,8.306 24.492002,4.3210001 23.958002,3.5600004 19.074002,3.5349998 12.000002,10.739 12.000002,9.7630005 z M0.97599983,0 L8.4210005,0 12,3.4169998 10.292,4.875 8.3060002,3.5240002 4.3220005,3.5080004 3.5600004,4.0419998 3.5349998,8.9260001 10.739,16 9.7630005,16 0,9 0,1 C0,0.44799995 0.43700027,0 0.97599983,0 z" Fill="#FF0067B0" HorizontalAlignment="Left" Height="28" Stretch="Fill" VerticalAlignment="Top" Width="28"/>
+                                                </Grid>
+                                            </Viewbox>
+                                        <StackPanel Margin="10">
+                                            <TextBlock Text="customerservice@support.com"/>
+                                            <TextBlock Text="Microsoft Exchange"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ComboBoxItem>
+                            </ComboBox>
+                                <syncfusion:RibbonButton IconType="VectorImage" Margin="15,5,0,0" SizeForm="Small" HorizontalAlignment="Left" Width="100" Label="Add Account">
+                                    <syncfusion:RibbonButton.VectorImage>
+                                        <Path x:Name="Add_account" Data="M3,0 L6,0 6,3 9,3 9,6 6,6 6,9 3,9 3,6 0,6 0,3 3,3 z" Fill="#FF68A490" HorizontalAlignment="Left" Height="9"  Stretch="Fill" VerticalAlignment="Top" Width="9" />
+                                    </syncfusion:RibbonButton.VectorImage>
+                                </syncfusion:RibbonButton>
+
+                                <StackPanel Margin="15" Orientation="Horizontal">
+                                    <syncfusion:RibbonButton BorderThickness="1" BorderBrush="Gray" IconType="VectorImage"  SizeForm="Large" Width="100" Height="100"  Label="Account Settings">
+                                        <syncfusion:RibbonButton.VectorImage>
+                                            <Path Data="M2.9999998,1.9999998 L28,1.9999998 28,15 17,15 17,27 2.9999998,27 2.9999998,15 2.9999998,12 z M0,0 L25,0 25,0.99999988 1,0.99999988 1,25 0,25 z" Fill="Gray" Margin="0,0,3,3.751" Stretch="Fill"/>
+                                            <Path Data="F1M346,417L323,417L323,426.2L323,428.96L323,440L336,440L336,429L346,429z" Fill="#FFFDFDFD" Stretch="Fill" Margin="4,3,4,4.751"/>
+                                            <Path Data="M11.364602,8.8453293E-05 C11.386816,-0.00011992455 11.409052,3.9815903E-05 11.431298,0.00057053566 11.754883,0.0082879066 12.080817,0.094462872 12.379895,0.26696897 13.333944,0.81798875 13.660961,2.0480328 13.107933,3.0000669 L12.070097,4.785836 12.122658,4.8594506 C12.2896,5.1021931 12.435662,5.3604076 12.558249,5.6315 L12.583405,5.6889946 14,5.6889946 C15.104,5.6889946 16,6.5849946 16,7.6889946 16,8.7929947 15.104,9.6889946 14,9.6889946 L12.583405,9.6889946 12.558249,9.7464898 C12.435662,10.017582 12.2896,10.275796 12.122658,10.518539 L12.090849,10.563088 13.164529,12.439119 C13.717476,13.39617 13.388507,14.619236 12.432598,15.171267 11.475689,15.724297 10.252805,15.396279 9.7008572,14.439226 L8.6804376,12.642269 8.5622797,12.657716 C8.3777008,12.678382 8.1900873,12.688995 8,12.688995 7.8099127,12.688995 7.6222992,12.678382 7.4377203,12.657716 L7.278616,12.636915 6.2320824,14.439226 C5.6801074,15.396279 4.4561633,15.724297 3.5002069,15.171267 2.5432506,14.619236 2.2162656,13.39617 2.7682405,12.439119 L3.8510218,10.478782 3.7797031,10.371057 C3.652914,10.171995 3.5398208,9.9633629 3.4417517,9.7464893 L3.4165955,9.6889946 2,9.6889946 C0.89599991,9.6889946 0,8.7929947 0,7.6889946 0,6.5849946 0.89599991,5.6889946 2,5.6889946 L3.4162314,5.6889946 3.4170401,5.6870496 C3.5389578,5.4084113 3.6855446,5.1430199 3.8540368,4.8936393 L3.9048655,4.8203223 2.8834732,3.0351173 C2.3305272,2.0781625 2.6594951,0.85522032 3.6154017,0.30324674 4.5723083,-0.24872756 5.7951889,0.078257084 6.3471348,1.0352117 L7.3280482,2.7341033 7.3632703,2.7291733 C7.5717816,2.7026604 7.7842979,2.6889945 8,2.6889945 8.1900873,2.6889946 8.3777008,2.6996075 8.5622797,2.7202729 L8.6497984,2.7317146 9.6407547,1.0049955 C10.007082,0.36692953 10.675944,0.0065529346 11.364602,8.8453293E-05 z" Fill="#FFE78E46" Margin="15,15.311,0,0" Stretch="Fill"/>
+                                            <Path Data="F1M344.3462,437C344.3462,438.296,343.2962,439.346,342.0002,439.346C340.7042,439.346,339.6542,438.296,339.6542,437C339.6542,435.704,340.7042,434.654,342.0002,434.654C343.2962,434.654,344.3462,435.704,344.3462,437" Fill="#FFFDFDFD" Height="4.692" Stretch="Fill" Width="4.692" HorizontalAlignment="Right" Margin="0,0,5.654,5.405" VerticalAlignment="Bottom"/>
+                                            <Path Data="M5.6080017,12 C6.9290161,12 8,15.071014 8,16.391998 L8,20 0,20 0,17.608002 C0,14.510986 2.5100098,12 5.6080017,12 z M9.5,0 C12.538,0 15,2.4619999 15,5.5 15,8.5380001 12.538,11 9.5,11 6.4619999,11 4,8.5380001 4,5.5 4,2.4619999 6.4619999,0 9.5,0 z" Fill="#FF4D82B8" Margin="6,5,10,5.751" Stretch="Fill"/>
+                                            <Path Data="F1M334,435L333,435L333,434L334,434z" Fill="#FFBBCFE3" Height="1" Stretch="Fill" Width="1" HorizontalAlignment="Left" Margin="14,0,0,9.751" VerticalAlignment="Bottom"/>
+                                        </syncfusion:RibbonButton.VectorImage>
+                                    </syncfusion:RibbonButton>
+                                    <StackPanel Margin="15" VerticalAlignment="Center">
+                                        <TextBlock Text="Account Settings" FontSize="20" FontWeight="Thin"/>
+                                        <TextBlock Text="Change the settings of this account or set up more connections." TextWrapping="Wrap"></TextBlock>
+
+                                    </StackPanel>
+                                    <Border BorderThickness="1" BorderBrush="LightGray">
+                                        <Border BorderThickness="1" BorderBrush="LightGray" Margin="10">
+                                            <Path Margin="10" x:Name="People" Data="M7.5759786,13.999999 L11.47203,20.477248 15.368022,13.999999 C19.598973,14.320019 22.944001,17.809148 22.944001,22.112304 22.944001,23.988381 21.561007,25.579429 19.69901,25.844439 L11.702988,26.983488 C11.549972,27.005492 11.394028,27.005492 11.239976,26.983488 L3.2449909,25.844439 C1.3829938,25.579429 -2.5989721E-08,23.988381 0,22.112304 -2.5989721E-08,17.809148 3.3450273,14.320019 7.5759786,13.999999 z M11.500007,0 C15.090007,0 18.000007,2.9099998 18.000007,6.5 18.000007,10.09 15.090007,13 11.500007,13 7.9100064,13 5.0000065,10.09 5.0000065,6.5 5.0000065,2.9099998 7.9100064,0 11.500007,0 z" Fill="#FFB8B5B8" HorizontalAlignment="Left" Height="70"  Stretch="Fill" VerticalAlignment="Top" Width="70" />
+                                        </Border>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </syncfusion:BackstageTabItem>
+                    <syncfusion:BackstageTabItem x:Name="saveAsTab" Header="Save As"/>
+                    <syncfusion:BackstageTabItem x:Name="attachmentsTab" Header="Save Attachments"/>
+                    <syncfusion:BackstageTabItem x:Name="printTab" Header="Print">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="25,0,0,0">
+                                <TextBlock Text="Print" FontSize="40" FontWeight="Thin" Foreground="#444444" Margin="10" />
+                                <StackPanel Orientation="Horizontal" Margin="10">
+                                    <Button  Width="75" Height="75">
+                                        <Viewbox Width="30" Height="30">
+                                            <Grid>
+                                                <Path Data="M7.9999999,17 L7.9999999,24 20,24 20,17 z M24,16 L24,18 26,18 26,16 z M3,6.9999999 L5.0000001,6.9999999 5.0000001,13 23,13 23,6.9999999 25,6.9999999 C26.657,6.9999999 28,8.3430003 28,9.9999999 L28,17 C28,18.656999 26.657,20 25,20 L21,20 21,25 7,25 7,20 3,20 C1.3429999,20 0,18.656999 0,17 L0,9.9999999 C0,8.3430003 1.3429999,6.9999999 3,6.9999999 z M7,0 L21,0 21,8.9999999 7,8.9999999 z" Fill="#FF848484" Stretch="Fill"/>
+                                                <Path Data="M0,16 L12,16 12,23 0,23 z M0,0 L12,0 12,7 0,7 z" Fill="#FFFDFDFD" Margin="8,1" Stretch="Fill" />
+                                                <Path Data="M4,14 L12,14 12,15 4,15 z M4,12 L12,12 12,13 4,13 z M0,0 L1,0 1,2 15,2 15,0 16,0 16,5 0,5 z" Fill="#FF4D82B8" Margin="6,7,6,3" Stretch="Fill" />
+                                            </Grid>
+                                        </Viewbox>
+                                    </Button>
+
+                                    <TextBlock Margin="10" VerticalAlignment="Center" Width="150" TextWrapping="Wrap" Text="Specify how you want the item to be printed and then click print"/>
+
+                                </StackPanel>
+                                <TextBlock FontSize="22" Foreground="DeepSkyBlue" Margin="10" FontWeight="Thin" Text="Printer"/>
+                                <ComboBox Margin="10" SelectedIndex="0">
+                                    <ComboBoxItem>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Viewbox Height="30" Width="30">
+                                                <Grid>
+                                                    <Path Data="F1M239.7266,628.7861C241.7606,628.7861,244.1466,629.6031,245.6556,630.7451L246.0246,629.0981L231.0346,624.1171L219.9996,627.4711L219.9996,630.5001L231.6126,634.7531C232.9256,631.4051,235.9186,628.7861,239.7266,628.7861" Fill="#FF42484B" Height="10.636" Stretch="Fill" Margin="1.87,0,1.975,0" VerticalAlignment="Top"/>
+                                                    <Path Data="F1M231,638C231,636.51,231.37,635.107,232.013,633.868L220,629.5L220,634.521L231.047,638.924C231.016,638.62,231,638.312,231,638" Fill="#FFE1E3E4" Stretch="Fill" Width="12.013" HorizontalAlignment="Left" Margin="1.87,5.383,0,7.076"/>
+                                                    <Path Data="F1M232,630L226.5,629L231.75,627.083L234.5,629z" Fill="#FFA5CAFE" Height="2.917" Stretch="Fill" Margin="8.37,2.966,13.5,0" VerticalAlignment="Top"/>
+                                                    <Path Data="F1M232.5503,632.21L221.3203,627.914L221.3203,628.967L231.9323,633.053C232.1163,632.761,232.3353,632.479,232.5503,632.21" Fill="#FF6D7275" Height="5.139" Stretch="Fill" Width="11.23" HorizontalAlignment="Left" Margin="3.19,3.797,0,0" VerticalAlignment="Top"/>
+                                                    <Path Data="M5.1232089,2.8946158 L2.3840011,4.2290193 9.3600042,6.8520004 12.468841,5.782272 z M3.8700171,0 L13.022017,3.4050204 C12.924025,3.9329731 12.773024,4.3699838 12.773024,4.9260127 12.773024,5.0734884 12.787085,5.4233333 12.797631,5.6649782 L12.79781,5.6690761 12.797902,5.6711675 12.799184,5.7003748 C12.804766,5.8269011 12.80902,5.9160001 12.80902,5.9160001 L12.788067,5.9077632 12.787641,5.9204447 C12.777869,6.2523991 12.790005,6.4615657 12.816005,6.7110016 L9.3190043,7.9399926 0,4.2780191 3.8700171,2.3927423 z" Fill="#FF2F3538" HorizontalAlignment="Left" Margin="0,8.838,0,5.105" Stretch="Fill" Width="13.022"/>
+                                                    <Path Data="F1M247.5,638C247.5,642.143,244.142,645.5,240,645.5C235.858,645.5,232.5,642.143,232.5,638C232.5,633.857,235.858,630.5,240,630.5C244.142,630.5,247.5,633.857,247.5,638" Fill="#FF00A205" Stretch="Fill" Margin="14.37,6.383,0.5,0.5"/>
+                                                    <Path Data="F1M240,631C236.14,631,233,634.141,233,638C233,641.859,236.14,645,240,645C243.86,645,247,641.859,247,638C247,634.141,243.86,631,240,631 M240,646C235.589,646,232,642.411,232,638C232,633.589,235.589,630,240,630C244.411,630,248,633.589,248,638C248,642.411,244.411,646,240,646" Fill="#FF0D5A0F" Stretch="Fill" Margin="13.87,5.883,0,0"/>
+                                                    <Path Data="F1M238.502,642.0791L234.888,638.8351L235.89,637.7181L238.45,640.0161L243.536,634.9731L244.592,636.0371z" Fill="White" Stretch="Fill" Width="9.704" HorizontalAlignment="Right" Margin="0,10.856,3.408,3.921"/>
+                                                </Grid>
+                                            </Viewbox>
+                                         
+                                                <TextBlock Margin="10" Text="HpLaserJet Printer"/>
+                          
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock FontSize="22" Foreground="DeepSkyBlue" Margin="10" FontWeight="Thin" Text="Settings"/>
+                                <ListBox Margin="10">
+                                    <ListBoxItem>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Viewbox Margin="10" Width="31" Height="31">
+                                                <Grid>
+                                                    <Path Data="F1M392,647L365,647L365,617L392,617z" Fill="Gray" Stretch="Fill" Margin="1,1,0,0"/>
+                                                    <Path Data="F1M391,646L364,646L364,616L391,616z" Fill="Black" Stretch="Fill" Margin="0,0,1,1"/>
+                                                    <Path Data="F1M388,621L367,621L367,619L388,619z" Fill="Gray" Height="2" Stretch="Fill" Margin="3,3,4,0" VerticalAlignment="Top"/>
+                                                    <Path Data="M21,25 L23,25 23,26 21,26 z M18,25 L20,25 20,26 18,26 z M15,25 L17,25 17,26 15,26 z M4.9999998,25 L14,25 14,26 4.9999998,26 z M1.9999998,25 L3.9999998,25 3.9999998,26 1.9999998,26 z M21,23 L23,23 23,24 21,24 z M18,23 L20,23 20,24 18,24 z M15,23 L17,23 17,24 15,24 z M4.9999998,23 L14,23 14,24 4.9999998,24 z M1.9999998,23 L3.9999998,23 3.9999998,24 1.9999998,24 z M21,21 L23,21 23,22 21,22 z M18,21 L20,21 20,22 18,22 z M15,21 L17,21 17,22 15,22 z M4.9999998,21 L14,21 14,22 4.9999998,22 z M1.9999998,21 L3.9999998,21 3.9999998,22 1.9999998,22 z M21,19 L23,19 23,20 21,20 z M18,19 L20,19 20,20 18,20 z M15,19 L17,19 17,20 15,20 z M4.9999998,19 L14,19 14,20 4.9999998,20 z M1.9999998,19 L3.9999998,19 3.9999998,20 1.9999998,20 z M21,17 L23,17 23,18 21,18 z M18,17 L20,17 20,18 18,18 z M15,17 L17,17 17,18 15,18 z M4.9999998,17 L14,17 14,18 4.9999998,18 z M1.9999998,17 L3.9999998,17 3.9999998,18 1.9999998,18 z M21,15 L23,15 23,16 21,16 z M18,15 L20,15 20,16 18,16 z M15,15 L17,15 17,16 15,16 z M4.9999998,15 L14,15 14,16 4.9999998,16 z M1.9999998,15 L3.9999998,15 3.9999998,16 1.9999998,16 z M21,13 L23,13 23,14 21,14 z M18,13 L20,13 20,14 18,14 z M15,13 L17,13 17,14 15,14 z M4.9999998,13 L14,13 14,14 4.9999998,14 z M1.9999998,13 L3.9999998,13 3.9999998,14 1.9999998,14 z M21,11 L23,11 23,12 21,12 z M18,11 L20,11 20,12 18,12 z M15,11 L17,11 17,12 15,12 z M4.9999998,11 L14,11 14,12 4.9999998,12 z M1.9999998,11 L3.9999998,11 3.9999998,12 1.9999998,12 z M21,9 L23,9 23,10 21,10 z M18,9 L20,9 20,10 18,10 z M15,9 L17,9 17,10 15,10 z M4.9999998,9 L14,9 14,10 4.9999998,10 z M1.9999998,9 L3.9999998,9 3.9999998,10 1.9999998,10 z M21,7 L23,7 23,8 21,8 z M18,7 L20,7 20,8 18,8 z M15,7 L17,7 17,8 15,8 z M4.9999998,7 L14,7 14,8 4.9999998,8 z M1.9999998,7 L3.9999998,7 3.9999998,8 1.9999998,8 z M21,5 L23,5 23,6 21,6 z M18,5 L20,5 20,6 18,6 z M15,5 L17,5 17,6 15,6 z M4.9999998,5 L14,5 14,6 4.9999998,6 z M1.9999998,5 L3.9999998,5 3.9999998,6 1.9999998,6 z M1,0.99999994 L1,27 24,27 24,0.99999994 z M0,0 L25,0 25,28 0,28 z" Fill="White" Margin="1,1,2,2" Stretch="Fill" />
+                                                </Grid>
+                                            </Viewbox>
+
+                                            <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold" Text="TableStyle"/>
+                                        </StackPanel>
+                                    </ListBoxItem>
+                                    <ListBoxItem>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Viewbox Margin="10" Width="31" Height="31">
+                                                <Grid>
+                                                    <Path Data="F1M462,647L435,647L435,617L462,617z" Fill="Gray" Stretch="Fill" Margin="1,1,0,0"/>
+                                                    <Path Data="F1M461,646L434,646L434,616L461,616z" Fill="Black" Stretch="Fill" Margin="0,0,1,1"/>
+                                                    <Path Data="F1M458,621L437,621L437,619L447,619L447,620L458,620z M442,624L437,624L437,623L442,623z M442,626L437,626L437,625L442,625z M442,628L437,628L437,627L442,627z M435,645L460,645L460,617L435,617z" Fill="White" Stretch="Fill" Margin="1,1,2,2"/>
+                                                    <Path Data="M0,19 L21,19 21,20 0,20 z M0,17 L21,17 21,18 0,18 z M0,15 L21,15 21,16 0,16 z M0,13 L21,13 21,14 0,14 z M0,11 L21,11 21,12 0,12 z M0,9 L21,9 21,10 0,10 z M0,7 L21,7 21,8 0,8 z M6,4 L15,4 15,5 6,5 z M6,2 L15,2 15,3 6,3 z M6,0 L15,0 15,1 6,1 z" Fill="Gray" Margin="3,7,4,4" Stretch="Fill" />
+                                                </Grid>
+                                            </Viewbox>
+                                            <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold" Text="MemoStyle"/>
+                                        </StackPanel>
+                                    </ListBoxItem>
+                                </ListBox>
+                            </StackPanel>
+                        </Grid>
+                    </syncfusion:BackstageTabItem>
+                    <syncfusion:BackstageTabItem x:Name="accountsTab" Header="Office Account"/>
+                    <syncfusion:BackstageTabItem x:Name="optionsTab" Header="Options"/>
+                    <syncfusion:BackStageCommandButton x:Name="exitTab" Header="Exit" Click="exitTab_Click"/>
+                </syncfusion:Backstage>
+            </syncfusion:Ribbon.BackStage>
+            
+            <syncfusion:Ribbon.QuickAccessToolBar>
+                <syncfusion:QuickAccessToolBar></syncfusion:QuickAccessToolBar>
+            </syncfusion:Ribbon.QuickAccessToolBar>
+            
+        </syncfusion:Ribbon>
+
+        <Grid Grid.Row="1" x:Name="rootgrid" >
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="270"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <syncfusion:GroupBar x:Name="groupBar" Grid.Column="0" ShowGripper="False" VisualMode="StackMode" HeaderHeight="0" AllowCollapse="False" Orientation="Vertical" 
+                         ItemHeaderHeight="28" SaveOriginalState="True" FlowDirection= "LeftToRight" IsEnabledContextMenu="False" 
+                         TextAlignment="Left">
+                <syncfusion:GroupBarItem x:Name="MailItem" HeaderText="Mail" IsExpanded="True"  >
+                    <syncfusion:GroupBarItem.Content>
+                        <syncfusion:TreeViewAdv ShowRootLines="False" SelectedTreeItem="{Binding SelectedCategory}" >
+                            <syncfusion:TreeViewItemAdv Header="customerservice@support.com" IsExpanded="True" >
+                                <syncfusion:TreeViewItemAdv Header="Inbox" IsSelected="True"/>
+                                <syncfusion:TreeViewItemAdv Header="Sent Items"></syncfusion:TreeViewItemAdv>
+                                <syncfusion:TreeViewItemAdv Header="Delete Items"></syncfusion:TreeViewItemAdv>
+                                <syncfusion:TreeViewItemAdv Header="Drafts"></syncfusion:TreeViewItemAdv>
+                            </syncfusion:TreeViewItemAdv>
+                        </syncfusion:TreeViewAdv>
+                    </syncfusion:GroupBarItem.Content>
+                </syncfusion:GroupBarItem>
+            </syncfusion:GroupBar>
+            
+            <ContentControl  Grid.Column="2" >
+                <ContentControl.Content>
+                    <Grid>
+                        <Grid x:Name="grid1">
+                            <local:MailContent/>
+                        </Grid>
+                    </Grid>
+                </ContentControl.Content>
+            </ContentControl>
+            
+        </Grid>
+    </Grid>
+</syncfusion:RibbonWindow>

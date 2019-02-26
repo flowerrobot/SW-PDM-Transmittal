@@ -1,0 +1,26 @@
+﻿<UserControl xmlns:sf="http://schemas.syncfusion.com/wpf"  x:Class="TransmittalManager.Views.FileDisplayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+
+             xmlns:local="clr-namespace:TransmittalManager.Views"
+             xmlns:viewModel="clr-namespace:TransmittalManager.ViewModel"
+             mc:Ignorable="d" 
+              d:DesignHeight="450" d:DesignWidth="800"
+         
+           >
+    <!--d:DataContext="{d:DesignInstance  Type=viewModel:TransmittalViewModel, IsDesignTimeCreatable=True}"-->
+    <Grid x:Name="LayoutRoot">
+        <sf:SfTreeGrid ChildPropertyName="Children" AutoGenerateColumns="False" ColumnSizer="AutoFillColumn" ItemsSource="{Binding Items}">
+            <sf:SfTreeGrid.Columns>
+                <sf:TreeGridTemplateColumn Width="30"/>
+                <sf:TreeGridCheckBoxColumn  Width="30" MappingName="IsChecked" HeaderText="" IsHidden="{Binding ShowChecked}"/>
+                <sf:TreeGridTextColumn HeaderText="Name" MappingName="Name"/>
+                <sf:TreeGridTextColumn HeaderText="Rev"/>
+                <sf:TreeGridTextColumn HeaderText="State"/>
+                <sf:TreeGridHyperlinkColumn HeaderText="File"/>
+            </sf:SfTreeGrid.Columns>
+        </sf:SfTreeGrid>
+    </Grid>
+</UserControl>
