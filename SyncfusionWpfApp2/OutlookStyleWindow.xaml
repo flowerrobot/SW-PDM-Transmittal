@@ -7,16 +7,16 @@
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" Office2010Icon="outlook.png" Icon="outlook.ico"
         mc:Ignorable="d"  xmlns:skin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
         Title="Outlook Style" Height="350" Width="525" WindowState="Maximized" skin:SfSkinManager.VisualStyle="Office2010Blue">
-    <syncfusion:RibbonWindow.StatusBar>
+ <!--   <syncfusion:RibbonWindow.StatusBar>
         <syncfusion:RibbonStatusBar>
             <StackPanel Margin="20,0,0,0" Orientation="Horizontal">
                 <TextBlock Foreground="White" Text="All Folders are up to date"></TextBlock>
             </StackPanel>
         </syncfusion:RibbonStatusBar>
     </syncfusion:RibbonWindow.StatusBar>
-    <syncfusion:RibbonWindow.DataContext>
-        <local:OutlookViewModel/>
-    </syncfusion:RibbonWindow.DataContext>
+    --><!--<syncfusion:RibbonWindow.DataContext>
+        --><!--<local:OutlookViewModel/>--><!--
+    </syncfusion:RibbonWindow.DataContext>--><!--
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -280,5 +280,5 @@
             </ContentControl>
             
         </Grid>
-    </Grid>
+    </Grid>-->
 </syncfusion:RibbonWindow>

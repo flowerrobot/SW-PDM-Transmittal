@@ -7,6 +7,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -18,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Syncfusion.Windows.Tools.Controls;
 
 namespace SyncfusionWpfApp1
 {
@@ -29,6 +31,37 @@ namespace SyncfusionWpfApp1
         public MainWindow()
         {
             InitializeComponent();
+
+            DockCollections = new ObservableCollection<DockItem>();
+
+            DockCollections.Add(new DockItem() { Header = "ToolBox" });
+
+            DockCollections.Add(new DockItem() { Header = "Integration" });
+
+            DockCollections.Add(new DockItem() { Header = "Features" });
+
+            this.DataContext = this;
+
+        }
+
+        private ObservableCollection<DockItem> _dockcollection;
+
+        public ObservableCollection<DockItem> DockCollections
+
+        {
+
+            get {
+
+                return _dockcollection;
+
+            }
+
+            set {
+
+                _dockcollection = value;
+
+            }
+
         }
     }
 }

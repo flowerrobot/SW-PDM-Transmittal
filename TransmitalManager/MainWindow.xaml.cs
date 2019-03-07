@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Syncfusion.Windows.Tools.Controls;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TransmittalManager.ViewModel;
 
 namespace TransmittalManager
 {
@@ -23,6 +13,20 @@ namespace TransmittalManager
         public MainWindow()
         {
             InitializeComponent();
+
+            //  docking.DataContext = this;
+            MV = (DataContext as MainViewModel);
+            dockPan.DataContext = MV;
+
+  
+  
+        }
+        public MainViewModel MV { get; }
+
+
+        private void Docking_OnCloseButtonClick(object sender, CloseButtonEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

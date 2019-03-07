@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AutoDependencyPropertyMarker;
+using Kasay;
 using TransmittalManager.ViewModel;
 
 namespace TransmittalManager.Views
@@ -29,11 +29,19 @@ namespace TransmittalManager.Views
             LayoutRoot.DataContext = this;
         }
 
-        [AutoDependencyProperty]
-         public bool ShowChecked { get; set; }
-         [AutoDependencyProperty]
-         public bool FlatView { get; set; }
-        [AutoDependencyProperty]
-         public ObservableCollection<FileDataViewModel> Items { get; set; }
+        [Bind]
+        public bool ShowChecked { get; set; }
+        [Bind]
+        public bool FlatView { get; set; }
+        [Bind]
+        public ObservableCollection<FileDataViewModel> Items { get; set; }
+
+
+        //public static readonly DependencyProperty ItemsProperty= DependencyProperty.Register("Items", typeof(ObservableCollection<FileDataViewModel>), typeof(FileDisplayView));
+        //public ObservableCollection<FileDataViewModel> Items
+        //{
+        //    get { return (ObservableCollection<FileDataViewModel>)GetValue(ItemsProperty); }
+        //    set { SetValue(ItemsProperty, value); }
+        //}
     }
 }

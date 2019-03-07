@@ -14,6 +14,7 @@
 
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using System.Collections.ObjectModel;
 
 namespace TransmittalManager.ViewModel
 {
@@ -43,22 +44,27 @@ namespace TransmittalManager.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<TransmittalViewModel>();
-            SimpleIoc.Default.Register<FileDataCollectionViewModel>();
+            SimpleIoc.Default.Register<SearchViewModel>();
+            //SimpleIoc.Default.Register<FileDataCollectionViewModel>();
         }
 
+        private MainViewModel mv;
         public MainViewModel Main
         {
-            get {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+            get
+            {
+                if(mv == null) mv = new MainViewModel();
+                return mv;
+                //   return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
 
-        public TransmittalViewModel TransView => ServiceLocator.Current.GetInstance<TransmittalViewModel>();
+        public TransmittalViewModel TransView => new TransmittalViewModel();//ServiceLocator.Current.GetInstance<TransmittalViewModel>();
 
-        public FileDataCollectionViewModel FileData
+        public ObservableCollection<FileDataViewModel> FileData
         {
             get {
-                FileDataCollectionViewModel fd = new FileDataCollectionViewModel();
+                ObservableCollection<FileDataViewModel> fd = new ObservableCollection<FileDataViewModel>();
 
                 FileDataViewModel i1 = new FileDataViewModel { Name = "Hi", Revision = "0", FileState = "Released" };
 
@@ -68,6 +74,8 @@ namespace TransmittalManager.ViewModel
                 return fd;
             }
         }
+
+        public SearchViewModel SearchView => new SearchViewModel();
 
         public static void Cleanup()
         {

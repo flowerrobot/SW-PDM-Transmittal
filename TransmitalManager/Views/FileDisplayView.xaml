@@ -7,10 +7,10 @@
              xmlns:local="clr-namespace:TransmittalManager.Views"
              xmlns:viewModel="clr-namespace:TransmittalManager.ViewModel"
              mc:Ignorable="d" 
-              d:DesignHeight="450" d:DesignWidth="800"
-         
+             d:DesignHeight="450" d:DesignWidth="800"
+            
            >
-    <!--d:DataContext="{d:DesignInstance  Type=viewModel:TransmittalViewModel, IsDesignTimeCreatable=True}"-->
+    <!-- d:DataContext="{Binding Source={StaticResource Locator} ,Path=FileData}"-->
     <Grid x:Name="LayoutRoot">
         <sf:SfTreeGrid ChildPropertyName="Children" AutoGenerateColumns="False" ColumnSizer="AutoFillColumn" ItemsSource="{Binding Items}">
             <sf:SfTreeGrid.Columns>
