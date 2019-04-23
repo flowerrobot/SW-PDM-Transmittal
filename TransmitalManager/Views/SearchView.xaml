@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TransmittalManager.Views"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
               d:DataContext="{Binding Source={StaticResource Locator}, Path=SearchView}">
@@ -40,7 +41,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto" MinHeight="30"/>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="50*"/>
             <RowDefinition Height="30" MinHeight="30"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -74,7 +75,7 @@
                 <TextBlock Text="Issue Type" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"/>
                 <TextBlock Text="Issued to Workshop" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
 
-                <ComboBox  Grid.Column="1" Grid.Row="0" SelectedValue="{Binding ProjectNo}" ItemsSource="{Binding Projects}"/>
+                <ComboBox  Grid.Column="1" Grid.Row="0" SelectedValue="{Binding ProjectNo,Converter={StaticResource Proj2String}}" ItemsSource="{Binding Projects,Converter={StaticResource Proj2String}}"/>
                 <TextBox  Grid.Column="3" Grid.Row="0" Text="{Binding IssueBy}"/>
 
                 <DatePicker Grid.Row="1" Grid.Column="1" Text="{Binding SentByDate}"/>
@@ -92,7 +93,15 @@
             <Button Content="{Binding SearchText}" Grid.Row="1" Grid.Column="4" DockPanel.Dock="Right" Margin="5,0,0,0" Command="{Binding SearchCommand}"/>
             <Button Content="Clear" Grid.Row="1" Grid.Column="3" DockPanel.Dock="Right" Command="{Binding ClearCommand}"/>
         </DockPanel>
-        <sf:SfTreeGrid ChildPropertyName="Children" AutoGenerateColumns="False" ColumnSizer="AutoFillColumn" ItemsSource="{Binding Results}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6">
+        <sf:SfTreeGrid ChildPropertyName="Children" AutoGenerateColumns="False" ColumnSizer="AutoFillColumn"
+                       ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedItem}"
+                       EditTrigger="OnDoubleTap" 
+                       Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding OpenTransmittal}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <sf:SfTreeGrid.Columns>
                 <sf:TreeGridTextColumn HeaderText="Id" MappingName="Id"/>
                 <sf:TreeGridTextColumn HeaderText="Project Number" MappingName="ProjectNo"/>

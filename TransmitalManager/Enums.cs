@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TransmittalManager
 {
-    public enum FileStatus
+    public enum FileStatus : int
     {
         Unknown,
         UnReleased,
@@ -14,20 +14,30 @@ namespace TransmittalManager
         Outdated
     }
 
-    public enum IssueType
+    public enum IssueType : int
     {
         Unknown,
         ForInformation,
         ForApproval,
-        ForManufacture
+        ForManufacture,
+        ForTender,
+        ForMaterialTakeOff
     }
 
-    public enum TransmittalStatus
+    public enum TransmittalStatus : int
     {
         Unknown,
         Preparing,
         WaitingForApproval,
         Issued,
         Received
+    }
+
+    [Flags]
+    public enum Groups
+    {
+        NoPermisions = 1,
+        Designer = 2,
+        ProjectManager = 4
     }
 }

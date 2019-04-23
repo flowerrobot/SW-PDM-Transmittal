@@ -24,12 +24,12 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="DatePicker">
-              <Setter Property="Margin" Value="0,2,0,2"/>
+            <Setter Property="Margin" Value="0,2,0,2"/>
             <Setter Property="Height" Value="25"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
-    <Grid x:Name="LayoutRoot" IsEnabled="{Binding IsEnabled}">
+    <Grid  IsEnabled="{Binding IsEnabled}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -53,7 +53,7 @@
         <TextBlock Text=" Transmittal" Grid.Row="0" FontSize="14" FontStyle="Italic" FontWeight="Bold" Margin="10,5,0,0" Grid.ColumnSpan="4"/>
         <TextBlock Text="Project : " Grid.Row="1" Grid.Column="0"/>
         <TextBlock Text="Status : " Grid.Row="1" Grid.Column="2" />
-        <TextBlock Text="{Binding State}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" />
+        <TextBlock Text="{Binding TransmittalStatus}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" />
         <TextBlock Text="Date : " Grid.Row="2" Grid.Column="2" />
         <TextBlock Text="Issued By : " Grid.Row="3" Grid.Column="2" />
         <CheckBox Content="Issue to workshop" Grid.Row="3" Grid.Column="1" IsChecked="{Binding IssueToWorkshop}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -62,18 +62,27 @@
         <TextBlock Text="Issue type : " Grid.Row="2" Grid.Column="0" />
 
         <TextBlock Text="Comments : " Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" />
-        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding ProjectNo}" ItemsSource="{Binding Projects}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding ProjectNo, Converter={StaticResource Proj2String}}" ItemsSource="{Binding Projects,Converter={StaticResource Proj2String}}"/>
         <TextBox Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="1" Text="{Binding Recipients}"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding IssueType}"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding IssueType, Converter={StaticResource TypeConverter}}" 
+                  ItemsSource="{Binding IssueTypes}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=., Converter={StaticResource TypeConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <!--<sf:SfRichTextBoxAdv Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>-->
-        <RichTextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
-        <DatePicker Grid.Row="2" Grid.Column="3" SelectedDate="{Binding SentDate}"/>
-        <local:FileDisplayView Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Items="{Binding Files}"/>
+        <!--<RichTextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" x:Name="comments"/>-->
+        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Comments}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding SentDateString}" HorizontalAlignment="Left"/>
+        <!--<DatePicker Grid.Row="2" Grid.Column="3" SelectedDate="{Binding SentDate}"/>-->
+        <ContentPresenter Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,19.6,70.133,0.2" Grid.RowSpan="2" Content="{Binding Files}"/>
         <DockPanel Grid.Row="7" Grid.Column="4" LastChildFill="False">
             <Button Margin="5" DockPanel.Dock="Top" Height="40" Width="40" Content="+" Command="{Binding AddFileCommand}"/>
             <Button Margin="5" DockPanel.Dock="Top" Height="40" Width="40" Content="-" Command="{Binding RemoveFileCommand}"/>
         </DockPanel>
         <Button Content="{Binding OkayText}" Grid.Row="9" Grid.Column="3" Command="{Binding OkayCommand}"/>
-        <Button Content="Close" Grid.Row="9" Grid.Column="1" Command="{Binding CancelCommand}" IsEnabled="True"/>
+        <Button Content="Close" Grid.Row="9" Grid.Column="1" Command="{Binding CancelCommand}" IsEnabled="True" Visibility="{Binding ShowCloseButton, Converter={StaticResource Bool2Vis}}"/>
     </Grid>
 </UserControl>

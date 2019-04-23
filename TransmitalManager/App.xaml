@@ -5,11 +5,34 @@
              StartupUri="MainWindow.xaml" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              d1p1:Ignorable="d" 
-             xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
-  <Application.Resources>
-    <ResourceDictionary>
-      <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:TransmittalManager.ViewModel" />
-    </ResourceDictionary>
+             xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:TransmittalManager.ViewModel"
+             xmlns:views="clr-namespace:TransmittalManager.Views"
+             xmlns:converters="clr-namespace:TransmittalManager.Converters">
+    <Application.Resources>
 
-  </Application.Resources>
+        <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:TransmittalManager.ViewModel" />
+        <BooleanToVisibilityConverter x:Key="Bool2Vis"/>
+
+        <converters:IssueTypeConverter x:Key="TypeConverter"/>
+        <converters:ProjectToString x:Key="Proj2String"/>
+        
+        <DataTemplate DataType="{x:Type viewModel:SearchViewModel}">
+            <Grid>
+                <views:SearchView />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:TransmittalViewModel}">
+            <Grid>
+                <views:TransmittalView/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DocumentCollectionViewModel}">
+            <Grid>
+                <views:FileDisplayView/>
+            </Grid>
+        </DataTemplate>
+    </Application.Resources>
 </Application>

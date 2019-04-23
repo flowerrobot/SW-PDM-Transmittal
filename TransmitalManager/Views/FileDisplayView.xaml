@@ -3,23 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-
              xmlns:local="clr-namespace:TransmittalManager.Views"
              xmlns:viewModel="clr-namespace:TransmittalManager.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-            
-           >
-    <!-- d:DataContext="{Binding Source={StaticResource Locator} ,Path=FileData}"-->
-    <Grid x:Name="LayoutRoot">
-        <sf:SfTreeGrid ChildPropertyName="Children" AutoGenerateColumns="False" ColumnSizer="AutoFillColumn" ItemsSource="{Binding Items}">
+          
+             >
+   <!--d:DataContext="{Binding Source={StaticResource Locator} ,Path=FileData}"-->
+    <Grid>
+        <sf:SfTreeGrid ChildPropertyName="Children" AutoGenerateColumns="False" ColumnSizer="AutoFillColumn" ItemsSource="{Binding }" SelectedItem="{Binding SelectedItem}" x:Name="treeGrid" AllowDraggingColumns="True" AllowResizingColumns="True" >
+            <!--ShowCheckBox="True"-->
             <sf:SfTreeGrid.Columns>
-                <sf:TreeGridTemplateColumn Width="30"/>
-                <sf:TreeGridCheckBoxColumn  Width="30" MappingName="IsChecked" HeaderText="" IsHidden="{Binding ShowChecked}"/>
+                <!--<sf:TreeGridTemplateColumn Width="30"/>-->
+                <sf:TreeGridCheckBoxColumn  Width="30" MappingName="IsChecked" HeaderText="" IsHidden="{Binding Path=DataContext.ShowChecked, ElementName=treeGrid}"/>
                 <sf:TreeGridTextColumn HeaderText="Name" MappingName="Name"/>
-                <sf:TreeGridTextColumn HeaderText="Rev"/>
-                <sf:TreeGridTextColumn HeaderText="State"/>
-                <sf:TreeGridHyperlinkColumn HeaderText="File"/>
+                <sf:TreeGridTextColumn HeaderText="Revision" MappingName="Revision"/>
+                <sf:TreeGridTextColumn HeaderText="Description" MappingName="Description" />
+                <sf:TreeGridTextColumn HeaderText="State" MappingName="FileState" Width="40"/>
+                <sf:TreeGridCheckBoxColumn Width="20" MappingName="TotalQty" HeaderText="Qty" IsHidden="{Binding Path=DataContext.ShowQty, ElementName=treeGrid}"/>
+                <!--<sf:TreeGridHyperlinkColumn HeaderText="File"/>-->
             </sf:SfTreeGrid.Columns>
         </sf:SfTreeGrid>
     </Grid>

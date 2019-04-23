@@ -4,32 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransmittalManager"
+        xmlns:dvm="clr-namespace:DockingAdapterMVVM;assembly=DockingAdapterMVVM"
+        xmlns:viewModel="clr-namespace:TransmittalManager.ViewModel"
         mc:Ignorable="d"
         Title="PDM Transmittal" Height="450" Width="800"
-          DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="Auto" MinHeight="400"/>
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="New Transmittal" Command="{Binding NewTransmittalCommand}"/>
-            <MenuItem Header="New Search" Command="{Binding SearchCommand}"/>
-        </Menu>
-        <syncfusion:DockingManager Grid.Row="1" DockFill="True" ItemsSource="{Binding DockCollection}"/>
-    </Grid>-->
+       >
+    <!--DataContext="{Binding Source={StaticResource Locator}, Path=Main}"-->
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
     <DockPanel x:Name="dockPan">
         <Menu Grid.Row="0" DockPanel.Dock="Top">
             <MenuItem Header="New Transmittal" Command="{Binding NewTransmittalCommand}"/>
             <MenuItem Header="New Search" Command="{Binding SearchCommand}"/>
         </Menu>
-        <!--<Button Command="{Binding MV.NewTransmittalCommand}" DockPanel.Dock="Top" Height="20"/>-->
-        <Grid x:Name="dg">
-            <syncfusion:DockingManager  x:Name="docking"  ItemsSource="{Binding DockCollection }" CanDocument="True" AutoHideVisibility="False" UseDocumentContainer="True" DocumentCloseButtonType="IndividualOnMouseOver" CloseButtonClick="Docking_OnCloseButtonClick"/>
-            <!--<syncfusion:DockingManager  x:Name="docking"  ItemsSource="{Binding DockCollection }" CanDocument="True" AutoHideVisibility="False" />-->
-                        <!--<syncfusion:DockingManager  x:Name="docking"  ItemsSource="{Binding DockCollection }"  UseDocumentContainer="True"/>-->
+        <Grid>
+            <dvm:DockingAdapter ItemsSource="{Binding Windows }" ActiveDocument="{Binding ActiveDoc, Mode=TwoWay}"/>
+
         </Grid>
-     
- 
     </DockPanel>
 </Window>

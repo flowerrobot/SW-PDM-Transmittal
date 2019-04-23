@@ -1,0 +1,32 @@
+<Application x:Class="TestApp.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TestApp" 
+             xmlns:viewModel="clr-namespace:TestApp.ViewModel"
+             xmlns:views="clr-namespace:TransmittalManager.Views;assembly=TransmittalManager" 
+             xmlns:views1="clr-namespace:TestApp.Views" 
+             StartupUri="MainWindow.xaml" 
+
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             d1p1:Ignorable="d" 
+             xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel1="clr-namespace:TransmittalManager.ViewModel;assembly=TransmittalManager">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type local:NameViewModel}">
+            <local:NameView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SearchTest}">
+            <!--<views1:SearchTestView />-->
+            <views:SearchView2/>
+        </DataTemplate>
+
+
+        <DataTemplate DataType="{x:Type viewModel1:SearchViewModel}">
+            <!--<views:SearchView2 />-->
+            <!--<views1:SearchTestView />-->
+            <views:SearchView2/>
+        </DataTemplate>
+
+        <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:TestApp.ViewModel" />
+
+    </Application.Resources>
+</Application>

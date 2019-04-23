@@ -15,13 +15,13 @@ namespace TransmittalManager
             InitializeComponent();
 
             //  docking.DataContext = this;
-            MV = (DataContext as MainViewModel);
-            dockPan.DataContext = MV;
+            //MV = (DataContext as MainViewModel);
+            //dockPan.DataContext = MV;
 
-  
-  
+
+
         }
-        public MainViewModel MV { get; }
+        //public MainViewModel MV { get; }
 
 
         private void Docking_OnCloseButtonClick(object sender, CloseButtonEventArgs e)

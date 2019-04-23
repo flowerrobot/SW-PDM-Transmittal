@@ -1,9 +1,11 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+using DockingAdapterMVVM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Syncfusion.Windows.Tools.Controls;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace TransmittalManager.ViewModel
 {
@@ -34,8 +36,8 @@ namespace TransmittalManager.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
-            
-            
+
+
             NewTransmittalCommand = new RelayCommand(NewTransCommandExecute, NewTransCommandCanExecute);
             SearchCommand = new RelayCommand(SearchCommandExecute, SearchCommandCanExecute);
 
@@ -52,16 +54,16 @@ namespace TransmittalManager.ViewModel
         private int transmitalCount = 0;
         public void SearchCommandExecute()
         {
-            //DockCollection.Add(new DockItem() { Header = "Test" });
-            var doc = new MyDockItem() { Header = "Search",  State = DockState.Document };
-            //var doc = new MyDockItem() { Header = "Search", CanDock = true, CanDocument = true, State = DockState.Document, CanFloatMaximize = true };
-            if (searchCount > 0)
+            try
             {
-                doc.Header += searchCount.ToString();
+                Windows.Add(new SearchViewModel(this));
             }
-            searchCount += 1;
-            //doc.Content = new Views.SearchView(new SearchViewModel((IDockItem)doc));
-            DockCollection.Add(doc);
+            catch (Exception ex)
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+            }
         }
         [DebuggerStepThrough]
         public bool SearchCommandCanExecute()
@@ -76,35 +78,65 @@ namespace TransmittalManager.ViewModel
 
         public void NewTransCommandExecute()
         {
-
-            //DockCollection.Add(new MyDockItem(){ Header = "New Transmittal1", CanDock = false, CanDocument = true, State = DockState.Document, CanFloatMaximize = true });
-            //DockCollection.Add(new MyDockItem(){ Header = "New Transmittal2", CanDocument = true, State = DockState.Document, CanFloatMaximize = true });
-            //DockCollection.Add(new MyDockItem(){ Header = "New Transmittal3",  State = DockState.Document, CanFloatMaximize = true });
-            //DockCollection.Add(new MyDockItem(){ Header = "New Transmittal4", CanDocument = true});
-            //DockCollection.Add(new MyDockItem(){ Header = "New Transmittal5", State = DockState.Document});
-
-
-
-            var doc = new MyDockItem()
-            { Header = "New Transmittal", CanDock = false, CanDocument = true, State = DockState.Document, CanFloatMaximize = true };
-            if (transmitalCount > 0)
+            try
             {
-                doc.Header += transmitalCount.ToString();
+                OpenTransmittal(new TransmittalViewModel());
             }
-            transmitalCount += 1;
-
-            var trans = new Views.TransmittalView( new TransmittalViewModel((IDockItem)doc));
-            
-
-            doc.Content = trans;
-            DockCollection.Add(doc);
+            catch (Exception ex)
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+            }
         }
 
+        public void OpenTransmittal(TransmittalViewModel view)
+        {
+            try
+            {
+                if (view.Id != 0) //if view already exists make it active
+                    foreach (IDockElement window in Windows)
+                    {
+                        if (window is TransmittalViewModel tran)
+                        {
+                            if (tran.Id == view.Id)
+                            {
+                                ActiveDoc = window;
+                                return;
+                            }
+                        }
+                    }
+
+                //Otherwise make it presmt
+                view.RequestToClose += View_RequestToClose; //Add a close notify
+                Windows.Add(view); //add view to collection
+                ActiveDoc = view; //activate view
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+            }
+        }
+
+        private void View_RequestToClose(object sender, System.EventArgs e)
+        {
+            if (sender is IDockElement de)
+            {
+                if (de.Closing() != true)
+                    Windows.Remove(de);
+            }
+        }
 
         public ObservableCollection<DockItem> DockCollection { get; } = new ObservableCollection<DockItem>();
 
+        public ObservableCollection<IDockElement> Windows { get; } = new ObservableCollection<IDockElement>();
 
-        public RelayCommand NewTransmittalCommand { get;  }
+
+        public RelayCommand NewTransmittalCommand { get; }
         public RelayCommand SearchCommand { get; }
+
+        public IDockElement ActiveDoc { get; set; }
     }
 }

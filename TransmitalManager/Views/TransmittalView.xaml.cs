@@ -1,5 +1,4 @@
-﻿using Kasay;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using TransmittalManager.ViewModel;
 
@@ -13,28 +12,28 @@ namespace TransmittalManager.Views
         public TransmittalView()
         {
             InitializeComponent();
-            LayoutRoot.DataContext = Transmittal;
+            //LayoutRoot.DataContext = Transmittal;
         }
 
-        public TransmittalView(TransmittalViewModel transmittal) : this()
-        {
-            Transmittal = transmittal;
-            LayoutRoot.DataContext = Transmittal;
-        }
+        //public TransmittalView(TransmittalViewModel transmittal) : this()
+        //{
+        //    Transmittal = transmittal;
+        //    LayoutRoot.DataContext = Transmittal;
+        //}
 
-        //[AutoDependencyProperty]
-        //[Bind]
-        public TransmittalViewModel Transmittal
-        {
-            get => (TransmittalViewModel)GetValue(TransmittalProperty);
-            set {
-                SetValue(TransmittalProperty, value);
-                LayoutRoot.DataContext = value;
-            }
-        }
+        ////[AutoDependencyProperty]
+        ////[Bind]
+        //public TransmittalViewModel Transmittal
+        //{
+        //    get => (TransmittalViewModel)GetValue(TransmittalProperty);
+        //    set {
+        //        SetValue(TransmittalProperty, value);
+        //        LayoutRoot.DataContext = value;
+        //    }
+        //}
 
 
-        public static readonly DependencyProperty TransmittalProperty = DependencyProperty.Register("Transmittal", typeof(TransmittalViewModel), typeof(TransmittalView), new PropertyMetadata(null));
+        //public static readonly DependencyProperty TransmittalProperty = DependencyProperty.Register("Transmittal", typeof(TransmittalViewModel), typeof(TransmittalView), new PropertyMetadata(null));
 
     }
 }

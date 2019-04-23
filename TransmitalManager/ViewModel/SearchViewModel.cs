@@ -1,16 +1,24 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DockingAdapterMVVM;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
-using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using TransmittalManager.Models;
+using DockState = DockingAdapterMVVM.DockState;
 
 namespace TransmittalManager.ViewModel
 {
-    public class SearchViewModel : DockViewModelBase
+    public class SearchViewModel : ViewModelBase, IDockElement
     {
+        private static int count;
+
+
         #region SearchFeilds
         public string FileName { get; set; }
         public string ProjectNo { get; set; }
@@ -21,11 +29,11 @@ namespace TransmittalManager.ViewModel
         public IssueType? IssueType { get; set; }
         public bool? IssueToWorkshop { get; set; }
         #endregion
-
+        private TransmitalManager searchModel = new TransmitalManager();
         public List<string> Projects { get; } //todo link to common fields
         public RelayCommand SearchCommand { get; set; }
         public RelayCommand ClearCommand { get; set; }
-
+        public RelayCommand OpenTransmittal { get; set; }
 
         public string SearchText
         {
@@ -34,68 +42,105 @@ namespace TransmittalManager.ViewModel
                 return "Search";
             }
         }
-        private bool IsSearching => worker.IsBusy;
+        private bool IsSearching { get; set; }
 
         public ObservableCollection<TransmittalViewModel> Results { get; } = new ObservableCollection<TransmittalViewModel>();
+        public TransmittalViewModel SelectedItem { get; set; }
+        public CancellationTokenSource cts = new CancellationTokenSource();
+        private IProgress<Transmittal> pg;
 
-
-        private BackgroundWorker worker;
+        private MainViewModel _parent;
         [PreferredConstructor]
         public SearchViewModel()
         {
+            if (count > 0) Header += count;
+            count += 1;
             SearchCommand = new RelayCommand(SearchCommandExecuted, SearchCommandCanExecute);
             ClearCommand = new RelayCommand(ClearCommandExecuted, ClearCommandCanExecute);
+            OpenTransmittal = new RelayCommand(OpenTransmittalExecuted);
 
-            worker = new BackgroundWorker();
-            worker.WorkerSupportsCancellation = true;
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += BeginSearch;
-            worker.RunWorkerCompleted += SearchComplete;
-            worker.ProgressChanged += ProgressChange;
+            pg = new Progress<Transmittal>(SearchChanged);
+            Task.Run(() => searchModel.SearchForAnyAsync(pg, cts.Token));
+            IsSearching = true;
+
+
+            //worker = new BackgroundWorker();
+            //worker.WorkerSupportsCancellation = true;
+            //worker.WorkerReportsProgress = true;
+            //worker.DoWork += BeginSearch;
+            //worker.RunWorkerCompleted += SearchComplete;
+            //worker.ProgressChanged += ProgressChange;
         }
 
-        public SearchViewModel(DockItem di) : this()
+        public SearchViewModel(MainViewModel parent) : this()
         {
-            SearchCommand = new RelayCommand(SearchCommandExecuted, SearchCommandCanExecute);
-            ClearCommand = new RelayCommand(ClearCommandExecuted, ClearCommandCanExecute);
-
-            worker = new BackgroundWorker();
-            worker.WorkerSupportsCancellation = true;
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += BeginSearch;
-            worker.RunWorkerCompleted += SearchComplete;
-            worker.ProgressChanged += ProgressChange;
+            _parent = parent;
         }
 
-        private void ProgressChange(object sender, ProgressChangedEventArgs e)
+
+        private void SearchChanged(Transmittal obj)
         {
-            if (e.UserState is TransmittalViewModel vm)
+            if (obj == null)
             {
-                Results.Add(vm);
+                IsSearching = false;
+                return;
             }
+            Results.Add(new TransmittalViewModel(obj));
         }
 
-        private void SearchComplete(object sender, RunWorkerCompletedEventArgs e)
-        {
+        //public SearchViewModel(DockItem di) : base(di)
+        //{
+        //    if (count > 0) Header += count;
+        //    count += 1;
+        //    SearchCommand = new RelayCommand(SearchCommandExecuted, SearchCommandCanExecute);
+        //    ClearCommand = new RelayCommand(ClearCommandExecuted, ClearCommandCanExecute);
 
-        }
+        //    worker = new BackgroundWorker();
+        //    worker.WorkerSupportsCancellation = true;
+        //    worker.WorkerReportsProgress = true;
+        //    worker.DoWork += BeginSearch;
+        //    worker.RunWorkerCompleted += SearchComplete;
+        //    worker.ProgressChanged += ProgressChange;
+        //}
 
-        private void BeginSearch(object sender, DoWorkEventArgs e)
-        {
+        #region BackGround Worker
 
-        }
+        
 
+        
+        //private BackgroundWorker worker;
+        //private void BeginSearch(object sender, DoWorkEventArgs e)
+        //{
 
+        //}
+        //private void ProgressChange(object sender, ProgressChangedEventArgs e)
+        //{
+        //    if (e.UserState is TransmittalViewModel vm)
+        //    {
+        //        Results.Add(vm);
+        //    }
+        //}
+
+        //private void SearchComplete(object sender, RunWorkerCompletedEventArgs e)
+        //{
+
+        //}
+        #endregion
         #region Commands
 
 
 
-
+        private  void OpenTransmittalExecuted()
+        {
+            if (SelectedItem != null)
+                _parent.OpenTransmittal(SelectedItem);
+        }
+        [DebuggerStepThrough]
         private bool ClearCommandCanExecute()
         {
             return !IsSearching;
         }
-
+        [DebuggerStepThrough]
         private bool SearchCommandCanExecute()
         {
             return true;
@@ -111,25 +156,44 @@ namespace TransmittalManager.ViewModel
             IssueToWorkshop = null;
             IssueBy = null;
         }
-        private void SearchCommandExecuted()
+        private async void SearchCommandExecuted()
         {
-
-            if (IsSearching)
+            try
             {
-                worker.CancelAsync();
+                if (IsSearching)
+                {
+                    cts.Cancel(false);
+                    IsSearching = false;
+                    //worker.CancelAsync();
+                }
+                else
+                {
+                    Results.Clear();
+                    //worker.RunWorkerAsync();
+                    cts.Dispose();
+                    cts = new CancellationTokenSource();
+                    IsSearching = true;
+                    await searchModel.SearchByParametersAsync(this, pg, cts.Token);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Results.Clear();
-                worker.RunWorkerAsync();
+                IsSearching = false;
             }
         }
         #endregion
 
 
-        public override bool? Closing()
+        public bool? Closing()
         {
             return false;
         }
+
+        public event EventHandler RequestToClose;
+
+
+        public string Header { get; set; } = "Search";
+
+        public DockState State { get; set; } = DockState.Document;
     }
 }

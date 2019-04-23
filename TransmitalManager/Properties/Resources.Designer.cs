@@ -59,5 +59,19 @@ namespace TransmittalManager.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  SELECT *
+        ///
+        ///FROM TransFiles tf 
+        ///inner join Transmittal t on t.Id = tf.[TransId] 
+        ///where tf.FileName like {0}
+        ///{1}.
+        /// </summary>
+        internal static string GetTransmitalsFileName {
+            get {
+                return ResourceManager.GetString("GetTransmitalsFileName", resourceCulture);
+            }
+        }
     }
 }

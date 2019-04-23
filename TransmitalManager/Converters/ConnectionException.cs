@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TransmittalManager
+namespace TransmittalManager.Converters
 {
-    public interface IDockItem
+    class ConnectionException : Exception
     {
-        string Header { get; set; }
     }
 }

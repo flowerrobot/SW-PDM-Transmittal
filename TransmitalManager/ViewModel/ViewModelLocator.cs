@@ -14,7 +14,7 @@
 
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
-using System.Collections.ObjectModel;
+using TransmittalManager.Models;
 
 namespace TransmittalManager.ViewModel
 {
@@ -45,15 +45,14 @@ namespace TransmittalManager.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<TransmittalViewModel>();
             SimpleIoc.Default.Register<SearchViewModel>();
-            //SimpleIoc.Default.Register<FileDataCollectionViewModel>();
+            SimpleIoc.Default.Register<DocumentCollectionViewModel>();
         }
 
         private MainViewModel mv;
         public MainViewModel Main
         {
-            get
-            {
-                if(mv == null) mv = new MainViewModel();
+            get {
+                if (mv == null) mv = new MainViewModel();
                 return mv;
                 //   return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
@@ -61,17 +60,19 @@ namespace TransmittalManager.ViewModel
 
         public TransmittalViewModel TransView => new TransmittalViewModel();//ServiceLocator.Current.GetInstance<TransmittalViewModel>();
 
-        public ObservableCollection<FileDataViewModel> FileData
+        public DocumentCollectionViewModel FileData
         {
             get {
-                ObservableCollection<FileDataViewModel> fd = new ObservableCollection<FileDataViewModel>();
+#if DEBUG
+                DocumentCollectionViewModel fd = new DocumentCollectionViewModel();
 
-                FileDataViewModel i1 = new FileDataViewModel { Name = "Hi", Revision = "0", FileState = "Released" };
+                FileDataViewModel i1 = new FileDataViewModel(new Document() { Description = "Hi", Revision = "0", FileState = "Released" });
 
                 fd.Add(i1);
-                fd.Add(new FileDataViewModel { Name = "two" });
-
+             //  fd.Add(new FileDataViewModel { Name = "two" });
                 return fd;
+#endif
+
             }
         }
 

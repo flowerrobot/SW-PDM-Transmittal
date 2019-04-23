@@ -25,23 +25,5 @@ namespace TransmittalManager.Views
         {
             InitializeComponent();
         }
-
-        public SearchView(SearchViewModel searcher)
-        {
-            InitializeComponent();
-            Searcher = searcher;
-        }
-
-        public SearchViewModel Searcher
-        {
-            get => (SearchViewModel)GetValue(SearcherProperty);
-            set {
-                SetValue(SearcherProperty, value);
-                LayoutRoot.DataContext = value;
-            }
-        }
-
-
-        public static readonly DependencyProperty SearcherProperty = DependencyProperty.Register("Searcher", typeof(SearchViewModel), typeof(SearchView), new PropertyMetadata(false));
     }
 }
