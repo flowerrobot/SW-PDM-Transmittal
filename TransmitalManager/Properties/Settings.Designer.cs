@@ -46,5 +46,16 @@ namespace TransmittalManager.Properties {
                 this["PDMIssuerRights"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GekkoVault;Integrated Security" +
+            "=True")]
+        public string VaultConnectionString {
+            get {
+                return ((string)(this["VaultConnectionString"]));
+            }
+        }
     }
 }

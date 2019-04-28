@@ -5,13 +5,11 @@
     [Id] INT NOT NULL PRIMARY KEY, 
     [ProjectNo] INT NOT NULL, 
     [Recipients] NVARCHAR(MAX) NULL, 
-    [SentDate]
-    DATE NULL,
-    [IssueBy] NCHAR(10) NULL, 
-    [CreatedBy] NCHAR(10) NULL, 
+    [SentDate] DATE NULL,
+    [IssueBy] int NULL, 
+    [CreatedBy] int NULL, 
     [Comments] NVARCHAR(MAX) NULL, 
-    [IssueType]
-    INT NULL,
+    [IssueType] INT NULL,
     [Status] INT NULL,
     [ToWorkShop] INT NULL
 	)

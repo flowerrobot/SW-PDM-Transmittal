@@ -30,7 +30,7 @@ namespace TransmittalManager.ViewModel
         public bool? IssueToWorkshop { get; set; }
         #endregion
         private TransmitalManager searchModel = new TransmitalManager();
-        public List<string> Projects { get; } //todo link to common fields
+        public List<Project> Projects => Project.AllProjects;
         public RelayCommand SearchCommand { get; set; }
         public RelayCommand ClearCommand { get; set; }
         public RelayCommand OpenTransmittal { get; set; }
@@ -42,6 +42,7 @@ namespace TransmittalManager.ViewModel
                 return "Search";
             }
         }
+        public Project Project { get; set; }
         private bool IsSearching { get; set; }
 
         public ObservableCollection<TransmittalViewModel> Results { get; } = new ObservableCollection<TransmittalViewModel>();

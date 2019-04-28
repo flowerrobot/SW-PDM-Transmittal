@@ -22,14 +22,14 @@ namespace TransmittalManager.Models
             CreatedBy = User.ActiveUser;
         }
 
-        public  Transmittal(SqlDataReader reader)
+        public Transmittal(SqlDataReader reader)
         {
             try
             {
                 Id = (int)reader["Id"];
                 //Project = reader["ProjectNo"].ToString();
                 int proId = (int)reader["ProjectNo"];
-                if(proId != 0)
+                if (proId != 0)
                 {
                     Project = TransmittalManager.Models.Project.AllProjects.FirstOrDefault(t => t.Number == proId);
                 }
@@ -45,7 +45,7 @@ namespace TransmittalManager.Models
                 {
                     IssueBy = User.AllUsers()[crById];
                 }
-               
+
                 Comments = reader["Comments"]?.ToString();
                 IssueType = (IssueType)reader["IssueType"];
                 TransmittalStatus = (TransmittalStatus)reader["Status"];
@@ -77,7 +77,7 @@ namespace TransmittalManager.Models
         public IssueType IssueType { get; set; }
         public TransmittalStatus TransmittalStatus { get; set; }
         public string Comments { get; set; }
-        public User IssueBy { get; set; } 
+        public User IssueBy { get; set; }
         public User CreatedBy { get; set; }
         public Project Project { get; set; }
 
@@ -129,8 +129,9 @@ namespace TransmittalManager.Models
                     if (vm.IssueType != IssueType) updates += $"IssueType = {vm.IssueType}";
                     if (vm.TransmittalStatus != TransmittalStatus) updates += $"Status = {vm.TransmittalStatus}";
                     if (vm.Comments != Comments) updates += $"Comments = {vm.Comments}";
-                    if (vm.IssueBy != IssueBy) updates += $"IssuedBy = {vm.IssueBy}";
-                    if (vm.Project != Project) updates += $"ProjectNo = {vm.Project}";
+                    if (vm.Project.Number != Project.Number) updates += $"ProjectNo = {vm.Project.Number}";
+                    if (vm.IssueBy?.Id != IssueBy.Id) updates += $"IssuedBy = {vm.IssueBy}";
+                    if (vm.CreatedBy?.Id != CreatedBy.Id) updates += $"CreatedBy= {vm.CreatedBy.Id}";
 
 
                     string query = string.Format(SqlScripts.UpdateTransmittal, Id, updates);
@@ -175,13 +176,14 @@ namespace TransmittalManager.Models
 
                         updates.Add("ToWorkShop", Convert.ToInt32(vm.IssueToWorkshop).ToString());
                         if (!string.IsNullOrEmpty(vm.Recipients)) updates.Add("Recipients", "'" + vm.Recipients + "'");
-                        //                    updates.Add("IssueType", vm.IssueType.ToString());
                         updates.Add("IssueType", ((int)vm.IssueType).ToString());
                         updates.Add("Status", ((int)vm.TransmittalStatus).ToString());
                         if (!string.IsNullOrEmpty(vm.Comments)) updates.Add("Comments", "'" + vm.Comments + "'");
+                        if (vm.Project != null) updates.Add("ProjectNo", vm.Project.Number.ToString());
                         if (vm.IssueBy != null) updates.Add("IssueBy", "'" + vm.IssueBy + "'");
-                        // if (!string.IsNullOrEmpty(vm.ProjectNo)) updates.Add("ProjectNo", "'" + vm.ProjectNo + "'");
-                        if (vm.Project != null) updates.Add("ProjectNo", "'" + 0 + "'"); //todo project table
+                        if (vm.CreatedBy?.Id != CreatedBy.Id) updates.Add("CreatedBy", vm.CreatedBy?.Id.ToString() ?? User.ActiveUser.Id.ToString());
+
+
 
                         string header = "", values = "";
                         foreach (KeyValuePair<string, string> v in updates)
@@ -242,17 +244,17 @@ namespace TransmittalManager.Models
 
         public async Task<bool> Sent(TransmittalViewModel vm)
         {
-           return await Task.Run(() =>
-            {
-                TransmittalStatus = TransmittalStatus.Issued;
-                SentDate = DateTime.Today;
+            return await Task.Run(() =>
+             {
+                 TransmittalStatus = TransmittalStatus.Issued;
+                 SentDate = DateTime.Today;
 
 
 
-                string FilledComment = Comments;
-                FilledComment = FilledComment.Replace("<status>", IssueType.ToString());
-                FilledComment = FilledComment.Replace("<issuer>", IssueBy.Id.ToString());
-                FilledComment = FilledComment.Replace("<issueDate>", SentDate.ToString("d"));
+                 string FilledComment = Comments;
+                 FilledComment = FilledComment.Replace("<status>", IssueType.ToString());
+                 FilledComment = FilledComment.Replace("<issuer>", IssueBy.Id.ToString());
+                 FilledComment = FilledComment.Replace("<issueDate>", SentDate.ToString("d"));
 
                 //ToDo
                 //PDFs -> or one drive link if file size is to large
@@ -260,7 +262,7 @@ namespace TransmittalManager.Models
                 //Send file
                 return false;
 
-            });
+             });
         }
     }
 }

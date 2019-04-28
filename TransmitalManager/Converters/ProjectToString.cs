@@ -15,9 +15,18 @@ namespace TransmittalManager.Converters
         {
             if(value is Project prj)
             {
-                return $"{prj.NumberStr} {prj.Name} ";
+                return $"{prj.NumberStr} {prj.Name}";
             }
-            return null;
+            else if(value is List<Project> prjs)
+            {
+                var lPrj = new List<string>();
+                foreach(var pj in prjs)
+                {
+                    lPrj.Add($"{pj.NumberStr} {pj.Name}");
+                }
+                return lPrj;
+            }
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -27,7 +36,7 @@ namespace TransmittalManager.Converters
                 var num = int.Parse(val.Split(' ').First());
                 return Project.AllProjects.FirstOrDefault(t => t.Number == num);
             }
-            return null;
+            return value;
         }
     }
 }

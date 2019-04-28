@@ -20,7 +20,7 @@ namespace TransmittalManager
             //  ss.Show(true,true);
 
             // Load any easily cached information
-            var u = User.AllUsersAsync();
+            var u =  User.AllUsersAsync();
             var p = Project.AllProjectsAsync();
 
             await u;

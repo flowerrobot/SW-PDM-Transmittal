@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace TransmittalManager.Models
     /// </summary>
     public class Project
     {
+       static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static List<Project> _projects;
         /// <summary>
         /// Will load and cache all projects avalible in the list.
@@ -27,31 +30,39 @@ namespace TransmittalManager.Models
         public static async Task<List<Project>> AllProjectsAsync()
         {
             if (_projects != null) return _projects;
-
-            
-
-
-            string query = string.Format(SQL_Queries.SqlScripts.GetAllProjects);
-            using (SqlConnection connection = new SqlConnection(TransmitalManager.connString))
+            try
             {
-                var t = connection.OpenAsync();                
-                using (SqlCommand command = new SqlCommand(query, connection))
+
+
+
+                string query = string.Format(SQL_Queries.SqlScripts.GetAllProjects);
+                using (SqlConnection connection = new SqlConnection(TransmitalManager.connString))
                 {
-                    _projects = new List<Project>();
-                    //TODO load projects from database
-                    _projects.Add(new Project() { Name = "Test Proj", Number = 001234 });
-                    _projects.Add(new Project() { Name = "Another Project", Number = 005678 });
-
-                    await t;
-                    var reader = await command.ExecuteReaderAsync();
-
-                    while (await reader.ReadAsync())
+                    var t = connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        _projects.Add(new Project() { Number = (int)reader["ProjNumber"], Name = (string)reader["ProjName"] });                       
+                        _projects = new List<Project>();
+                        //TODO load projects from database
+                        _projects.Add(new Project() { Name = "Test Proj", Number = 001234 });
+                        _projects.Add(new Project() { Name = "Another Project", Number = 005678 });
+
+                        await t;
+                        var reader = await command.ExecuteReaderAsync();
+
+                        while (await reader.ReadAsync())
+                        {
+                            _projects.Add(new Project() { Number = (int)reader["ProjNumber"], Name = (string)reader["ProjName"] });
+                        }
                     }
                 }
             }
-
+            catch (Exception ex)
+            {
+#if DEBUG
+                System.Diagnostics.Debugger.Break();
+#endif
+                logger.Error(ex);
+            }
             return _projects;
         }
 
@@ -62,6 +73,6 @@ namespace TransmittalManager.Models
         public string NumberStr => Number.ToString("000000");
         public string Name { get; set; }
 
-
+        public override string ToString() => $"{NumberStr} {Name}";
     }
 }

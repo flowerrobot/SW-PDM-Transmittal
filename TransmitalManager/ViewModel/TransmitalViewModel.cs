@@ -36,9 +36,9 @@ namespace TransmittalManager.ViewModel
         public IssueType IssueType { get; set; }
         public TransmittalStatus TransmittalStatus { get; set; }
         public string Comments { get; set; }
-        public User IssueBy { get; set; } 
-        public User CreatedBy { get; set; } 
-        public Project Project { get; set; } 
+        public User IssueBy { get; set; }
+        public User CreatedBy { get; set; }
+        public Project Project { get; set; }
 
 
         private bool filesLoaded;
@@ -73,9 +73,17 @@ namespace TransmittalManager.ViewModel
         public string OkayText
         {
             get {
+                if (User.ActiveUser.Group == Groups.NoPermisions) return "Close";
                 switch (TransmittalStatus)
                 {
-                    case TransmittalStatus.Preparing: return "Submit to PM";
+                    case TransmittalStatus.Preparing:
+                        {
+                            if (User.ActiveUser.Group.HasFlag(Groups.ProjectManager))
+                                return "Issue";
+                            else
+                                return "Submit to PM";
+
+                        }
                     case TransmittalStatus.WaitingForApproval: return "Issue";
                     case TransmittalStatus.Received:
                     case TransmittalStatus.Issued:
@@ -100,8 +108,7 @@ namespace TransmittalManager.ViewModel
         {
             get {
                 if (!transmittalModel.IsLoadedFromDb) return true;
-
-
+                if (User.ActiveUser.Group == Groups.NoPermisions) return false;
                 if (TransmittalStatus == TransmittalStatus.Issued) return false;
                 return true;
             }
@@ -118,6 +125,7 @@ namespace TransmittalManager.ViewModel
         [PreferredConstructor]
         public TransmittalViewModel()
         {
+            ///This method shouldn't be used other than for debug
             OkayCommand = new RelayCommand(OkayCommandExecute, OkayCommandCanExecute);
             CancelCommand = new RelayCommand(CancelCommandExecute, CancelCommandCanExecute);
             AddFileCommand = new RelayCommand(AddFileExecute, FileEditCanExecute);
@@ -158,6 +166,11 @@ namespace TransmittalManager.ViewModel
                     transmittalModel.Files.ForEach(f => files.Add(new FileDataViewModel(f)));
                 }
             }
+            else
+            {               
+                CreatedBy = transmittalModel.CreatedBy;
+                TransmittalStatus = TransmittalStatus.Preparing;
+            }
         }
 
         /// <summary>
@@ -186,9 +199,9 @@ namespace TransmittalManager.ViewModel
         /// <returns></returns>
         public async Task<List<FileDataViewModel>> LoadFilesAsync(CancellationToken cts)
         {
-            
+
             if (cts == null) cts = new CancellationTokenSource().Token;
-            
+
             if (transmittalModel?.FilesLoad ?? true) return null;
             Task<List<Document>> t = transmittalModel.LoadFilesAsync(null, cts);
 
@@ -204,69 +217,70 @@ namespace TransmittalManager.ViewModel
             return vv;
         }
 
-    /// <summary>
-    /// Event update from IProgress when looking for new docs
-    /// </summary>
-    /// <param name="obj"></param>
-    private void DocsUpdated(Document obj)
-    {
-        Files.Add(new FileDataViewModel(obj));
-    }
+        /// <summary>
+        /// Event update from IProgress when looking for new docs
+        /// </summary>
+        /// <param name="obj"></param>
+        private void DocsUpdated(Document obj)
+        {
+            Files.Add(new FileDataViewModel(obj));
+        }
 
-    #region Commands
+        #region Commands
 
-    private bool cancel;
+        private bool cancel;
 
-    private void OkayCommandExecute()
-    {
-        cancel = false;
-        RequestToClose?.Invoke(this, null);
-    }
-    [DebuggerStepThrough]
-    private bool OkayCommandCanExecute()
-    {
-        if (Files.Count == 0) return false;
-        if (Project == null) return false;
-        return true;
-    }
+        private void OkayCommandExecute()
+        {
+            cancel = false;
+            RequestToClose?.Invoke(this, null);
+        }
+        [DebuggerStepThrough]
+        private bool OkayCommandCanExecute()
+        {
+            if (Files.Count == 0) return false;
+            if (Project == null) return false;
+            if (IssueType == 0) return false;
+            return true;
+        }
 
-    private void CancelCommandExecute()
-    {
-        cancel = true;
-        RequestToClose?.Invoke(this, null);
-    }
-    [DebuggerStepThrough]
-    private bool CancelCommandCanExecute() => true;
+        private void CancelCommandExecute()
+        {
+            cancel = true;
+            RequestToClose?.Invoke(this, null);
+        }
+        [DebuggerStepThrough]
+        private bool CancelCommandCanExecute() => true;
 
-    [DebuggerStepThrough]
-    private bool FileEditCanExecute()
-    {
-        return IsEnabled;
-    }
-    private bool FileRemoveCanExecute()
-    {
-        return IsEnabled && Files.SelectedItem != null;
-    }
-    private void RemoveFileExecute()
-    {
-        if (Files.SelectedItem != null)
-            Files.Remove(Files.SelectedItem);
-    }
+        [DebuggerStepThrough]
+        private bool FileEditCanExecute()
+        {
+            return IsEnabled;
+        }
+        private bool FileRemoveCanExecute()
+        {
+            return IsEnabled && Files.SelectedItem != null;
+        }
+        private void RemoveFileExecute()
+        {
+            if (Files.SelectedItem != null)
+                Files.Remove(Files.SelectedItem);
+        }
 
-    private void AddFileExecute()
-    {
+        private void AddFileExecute()
+        {
 #if BlockPDM
 
-        OpenFileDialog ofd = new OpenFileDialog();
-        ofd.Multiselect = true;
-        ofd.Filter = "Files (*.dxf,*.Pdf)|*.dxf;*.pdf";
-        if (ofd.ShowDialog() == true)
-        {
-            foreach (string fileName in ofd.FileNames)
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = "Files (*.dxf,*.Pdf)|*.dxf;*.pdf";
+            if (ofd.ShowDialog() == true)
             {
-                Files.Add(new FileDataViewModel(new Document(fileName) { FileId = 1, Description = "Test" }));
+                foreach (string fileName in ofd.FileNames)
+                {
+                    Files.Add(new FileDataViewModel(new Document(fileName) { FileId = 1, Description = "Test" }));
+                }
             }
-        }
 #else
 
 
@@ -340,77 +354,77 @@ namespace TransmittalManager.ViewModel
             //}
 #endif
         }
-    #endregion
+        #endregion
 
-    public bool? Closing()
-    {
-        if (cancel) return false;
-        MessageBoxResult res = MessageBox.Show("Save?", "Save changes", MessageBoxButton.YesNoCancel);
-        System.Threading.Tasks.Task<bool> a;
-        if (res == MessageBoxResult.Yes)
-            a = transmittalModel.Save(this);
-        else if (res == MessageBoxResult.No)
-            if (res == MessageBoxResult.Cancel)
-                return true;
-        return false;
-    }
-
-    public event EventHandler RequestToClose;
-
-    public string Header { get; set; } = "Trans";
-    public DockingAdapterMVVM.DockState State { get; set; } = DockState.Document;
-
-    #region Background worker
-
-    private BackgroundWorker bgw;
-
-    internal BackgroundWorker Bgw
-    {
-        get {
-            if (bgw != null) return bgw;
-            bgw = new BackgroundWorker();
-            bgw.WorkerReportsProgress = true;
-            bgw.WorkerSupportsCancellation = true;
-            bgw.ProgressChanged += BgwOnProgressChanged;
-            bgw.RunWorkerCompleted += BgwOnRunWorkerCompleted;
-            bgw.DoWork += BgwOnDoWork;
-
-            return bgw;
-        }
-    }
-
-    private async void BgwOnDoWork(object sender, DoWorkEventArgs e)
-    {
-        cts = new CancellationTokenSource();
-
-        //Task<List<Document>> files = Task.Run(LoadFilesAsync);
-        //e.Result = files.Result;
-        //e.Result = LoadFiles(cts.Token);
-        
-        e.Result = await LoadFilesAsync(cts.Token);
-    }
-
-    private void BgwOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-    {
-        if (e.Result is List<FileDataViewModel> fi)
+        public bool? Closing()
         {
-            Files = new DocumentCollectionViewModel(fi);
-            //List<FileDataViewModel> vv = new List<FileDataViewModel>();
-            //foreach (Document v in fi)
-            //{
-            //    vv.Add(new FileDataViewModel(v));
-            //}
-
+            if (cancel) return false;
+            MessageBoxResult res = MessageBox.Show("Save?", "Save changes", MessageBoxButton.YesNoCancel);
+            System.Threading.Tasks.Task<bool> a;
+            if (res == MessageBoxResult.Yes)
+                a = transmittalModel.Save(this);
+            else if (res == MessageBoxResult.No)
+                if (res == MessageBoxResult.Cancel)
+                    return true;
+            return false;
         }
 
-        filesLoaded = true;
-    }
+        public event EventHandler RequestToClose;
 
-    private void BgwOnProgressChanged(object sender, ProgressChangedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
+        public string Header { get; set; } = "Trans";
+        public DockingAdapterMVVM.DockState State { get; set; } = DockState.Document;
 
-    #endregion
-}
+        #region Background worker
+
+        private BackgroundWorker bgw;
+
+        internal BackgroundWorker Bgw
+        {
+            get {
+                if (bgw != null) return bgw;
+                bgw = new BackgroundWorker();
+                bgw.WorkerReportsProgress = true;
+                bgw.WorkerSupportsCancellation = true;
+                bgw.ProgressChanged += BgwOnProgressChanged;
+                bgw.RunWorkerCompleted += BgwOnRunWorkerCompleted;
+                bgw.DoWork += BgwOnDoWork;
+
+                return bgw;
+            }
+        }
+
+        private async void BgwOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            cts = new CancellationTokenSource();
+
+            //Task<List<Document>> files = Task.Run(LoadFilesAsync);
+            //e.Result = files.Result;
+            //e.Result = LoadFiles(cts.Token);
+
+            e.Result = await LoadFilesAsync(cts.Token);
+        }
+
+        private void BgwOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Result is List<FileDataViewModel> fi)
+            {
+                Files = new DocumentCollectionViewModel(fi);
+                //List<FileDataViewModel> vv = new List<FileDataViewModel>();
+                //foreach (Document v in fi)
+                //{
+                //    vv.Add(new FileDataViewModel(v));
+                //}
+
+            }
+
+            filesLoaded = true;
+        }
+
+        private void BgwOnProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
 }

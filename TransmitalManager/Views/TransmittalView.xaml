@@ -62,7 +62,7 @@
         <TextBlock Text="Issue type : " Grid.Row="2" Grid.Column="0" />
 
         <TextBlock Text="Comments : " Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" />
-        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding ProjectNo, Converter={StaticResource Proj2String}}" ItemsSource="{Binding Projects,Converter={StaticResource Proj2String}}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Project, Converter={StaticResource Proj2String}}" ItemsSource="{Binding Projects}"/>
         <TextBox Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="1" Text="{Binding Recipients}"/>
         <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding IssueType, Converter={StaticResource TypeConverter}}" 
                   ItemsSource="{Binding IssueTypes}">
