@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using TransmittalManager.Models;
@@ -20,11 +21,15 @@ namespace TransmittalManager
             //  ss.Show(true,true);
 
             // Load any easily cached information
-            var u =  User.AllUsersAsync();
-            var p = Project.AllProjectsAsync();
+            CancellationTokenSource ctk = new CancellationTokenSource();
+            var c = new List<Task>();
 
-            await u;
-            await p;
+            c.Add(Recipient.LoadCompanies(ctk.Token));
+            c.Add(Recipient.LoadRecipients(ctk.Token));
+            c.Add(User.AllUsersAsync(ctk.Token));
+            c.Add(Project.AllProjectsAsync(ctk.Token));
+
+            Task.WaitAll(c.ToArray());
 
             ss.Close(TimeSpan.FromSeconds(0.5));
 

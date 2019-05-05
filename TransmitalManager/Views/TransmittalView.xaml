@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TransmittalManager.Views"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:converters="clr-namespace:TransmittalManager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
           d:DataContext="{Binding Source={StaticResource Locator}, Path=TransView}">
@@ -28,6 +29,7 @@
             <Setter Property="Height" Value="25"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        <converters:RecipientsSelectionToStringConverter x:Key="RStString"/>
     </UserControl.Resources>
     <Grid  IsEnabled="{Binding IsEnabled}">
         <Grid.RowDefinitions>
@@ -50,6 +52,10 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
+        <Grid Grid.Column="1"  Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="9">
+            <ContentControl Content="{Binding ViewOverlay}"/>
+        </Grid>
+        
         <TextBlock Text=" Transmittal" Grid.Row="0" FontSize="14" FontStyle="Italic" FontWeight="Bold" Margin="10,5,0,0" Grid.ColumnSpan="4"/>
         <TextBlock Text="Project : " Grid.Row="1" Grid.Column="0"/>
         <TextBlock Text="Status : " Grid.Row="1" Grid.Column="2" />
@@ -63,7 +69,10 @@
 
         <TextBlock Text="Comments : " Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" />
         <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Project, Converter={StaticResource Proj2String}}" ItemsSource="{Binding Projects}"/>
-        <TextBox Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="1" Text="{Binding Recipients}"/>
+        <DockPanel Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="1" >
+            <Button Content=".." DockPanel.Dock="Right" Margin="2" Width="20"/>
+            <TextBox Text="{Binding Recipients, Converter={StaticResource RStString}}" IsEnabled="False" />
+        </DockPanel>
         <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding IssueType, Converter={StaticResource TypeConverter}}" 
                   ItemsSource="{Binding IssueTypes}">
             <ComboBox.ItemTemplate>

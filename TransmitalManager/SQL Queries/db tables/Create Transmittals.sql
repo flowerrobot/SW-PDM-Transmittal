@@ -2,7 +2,7 @@
     CREATE TABLE[dbo].[Transmittals]
     (
 
-    [Id] INT NOT NULL PRIMARY KEY, 
+    [Id] INT NOT NULL PRIMARY KEY Identity(1,1), 
     [ProjectNo] INT NOT NULL, 
     [Recipients] NVARCHAR(MAX) NULL, 
     [SentDate] DATE NULL,

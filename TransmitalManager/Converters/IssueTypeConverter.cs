@@ -15,7 +15,7 @@ namespace TransmittalManager.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is string)) return IssueType.Unknown;
+            if (!(value is string)) return value;
 
             foreach (IssueType issueType in IssueTypes)
             {

@@ -1,16 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2041
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransmitalManager", "TransmitalManager\TransmitalManager.csproj", "{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{49CCE7A1-AE02-4D97-BBD9-10ECA52775D3} = {49CCE7A1-AE02-4D97-BBD9-10ECA52775D3}
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncfusionWpfApp1", "SyncfusionWpfApp1\SyncfusionWpfApp1.csproj", "{F62492F0-583B-4170-A8CF-D1093547F604}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncfusionWpfApp2", "SyncfusionWpfApp2\SyncfusionWpfApp2.csproj", "{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockingAdapterMVVM", "DockingAdapterMVVM\DockingAdapterMVVM.csproj", "{49CCE7A1-AE02-4D97-BBD9-10ECA52775D3}"
 EndProject
@@ -28,14 +24,6 @@ Global
 		{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFADA7AE-F77E-47E9-83E9-B4AC81F76FDC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F62492F0-583B-4170-A8CF-D1093547F604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F62492F0-583B-4170-A8CF-D1093547F604}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F62492F0-583B-4170-A8CF-D1093547F604}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F62492F0-583B-4170-A8CF-D1093547F604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89E8DF0B-991A-45D7-9DF8-A3C2F754F0C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{49CCE7A1-AE02-4D97-BBD9-10ECA52775D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49CCE7A1-AE02-4D97-BBD9-10ECA52775D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49CCE7A1-AE02-4D97-BBD9-10ECA52775D3}.Release|Any CPU.ActiveCfg = Release|Any CPU

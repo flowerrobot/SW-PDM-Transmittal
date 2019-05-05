@@ -22,7 +22,7 @@ namespace TransmittalManager.ViewModel
     {
         public int? Id { get; }
         public bool IssueToWorkshop { get; set; }
-        public string Recipients { get; set; } = "Test";
+        public RecipientsSelectionViewModel Recipients { get; set; }
         public DateTime? SentDate { get; set; }
 
         public string SentDateString
@@ -65,62 +65,59 @@ namespace TransmittalManager.ViewModel
                 }
             }
         }
+        public object ViewOverlay { get; set; }
 
         // Common lookups
         public List<Project> Projects => Models.Project.AllProjects;
         public List<IssueType> IssueTypes => new List<IssueType>(new[] { IssueType.ForManufacture, IssueType.ForInformation, IssueType.ForApproval });
 
-        public string OkayText
+
+
+        /// <summary>
+        /// If the other button is a close button, hide this button
+        /// </summary>
+        public bool ShowCloseButton => ButtonViewType != ButtonType.Cancel;
+
+
+        public bool IsEnabled => ViewStatus.HasFlag(ViewStatusTypes.Editable);
+
+        private Transmittal transmittalModel;
+        private IProgress<Document> pg;
+
+        /// <summary>
+        /// This is an internal status controlling the view and what is allowable
+        /// </summary>
+        public ViewStatusTypes ViewStatus { get; internal set; }
+        /// <summary>
+        /// This indicates the state the okay\cancel buttons should be.
+        /// </summary>
+        public ButtonType ButtonViewType
         {
             get {
-                if (User.ActiveUser.Group == Groups.NoPermisions) return "Close";
+
                 switch (TransmittalStatus)
                 {
                     case TransmittalStatus.Preparing:
                         {
                             if (User.ActiveUser.Group.HasFlag(Groups.ProjectManager))
-                                return "Issue";
+                                return ButtonType.Submit;
                             else
-                                return "Submit to PM";
-
+                                return ButtonType.Cancel;
                         }
-                    case TransmittalStatus.WaitingForApproval: return "Issue";
+                    case TransmittalStatus.WaitingForApproval:
+                        {
+                            if (User.ActiveUser.Group.HasFlag(Groups.ProjectManager))
+                                return ButtonType.Submit;
+                            else
+                                return ButtonType.Approval;
+                        }
+
                     case TransmittalStatus.Received:
                     case TransmittalStatus.Issued:
-                    default: return "Close";
+                    default: return ButtonType.Cancel;
                 }
-
             }
         }
-
-        public RelayCommand OkayCommand { get; set; }
-        public RelayCommand CancelCommand { get; set; }
-
-        public RelayCommand AddFileCommand { get; set; }
-        public RelayCommand RemoveFileCommand { get; set; }
-
-        public bool ShowCloseButton
-        {
-            get { return IsEnabled; }
-        }
-
-        public bool IsEnabled
-        {
-            get {
-                if (!transmittalModel.IsLoadedFromDb) return true;
-                if (User.ActiveUser.Group == Groups.NoPermisions) return false;
-                if (TransmittalStatus == TransmittalStatus.Issued) return false;
-                return true;
-            }
-        }
-
-        private Transmittal transmittalModel;
-        private IProgress<Document> pg;
-        //public TransmittalViewModel(DockItem di) : base(di)
-        //{
-        //    OkayCommand = new RelayCommand<ICloseable>(OkayCommandExecute, OkayCommandCanExecute);
-        //    CancelCommand = new RelayCommand<ICloseable>(CancelCommandExecute, CancelCommandCanExecute);
-        //}
 
         [PreferredConstructor]
         public TransmittalViewModel()
@@ -130,17 +127,24 @@ namespace TransmittalManager.ViewModel
             CancelCommand = new RelayCommand(CancelCommandExecute, CancelCommandCanExecute);
             AddFileCommand = new RelayCommand(AddFileExecute, FileEditCanExecute);
             RemoveFileCommand = new RelayCommand(RemoveFileExecute, FileRemoveCanExecute);
+            EditRecipientsCommand = new RelayCommand(EditRecipientExecute, FileRemoveCanExecute);
 
             transmittalModel = new Transmittal();
             TransmittalStatus = TransmittalStatus.Preparing;
             //Projects = new List<string>();
             //Models.Projects.AllProjects.ForEach(t => Projects.Add($"{t.Number} {t.Name}"));
             files = new DocumentCollectionViewModel();
+
+            ViewStatus = ViewStatusTypes.NewlyCreated & ViewStatusTypes.Editable;
         }
         public TransmittalViewModel(Transmittal transmittal)
         {
             OkayCommand = new RelayCommand(OkayCommandExecute, OkayCommandCanExecute);
             CancelCommand = new RelayCommand(CancelCommandExecute, CancelCommandCanExecute);
+            AddFileCommand = new RelayCommand(AddFileExecute, FileEditCanExecute);
+            RemoveFileCommand = new RelayCommand(RemoveFileExecute, FileRemoveCanExecute);
+            EditRecipientsCommand = new RelayCommand(EditRecipientExecute, EditRecipientCanExecute);
+
             pg = new Progress<Document>(DocsUpdated);
             transmittalModel = transmittal;
 
@@ -151,7 +155,8 @@ namespace TransmittalManager.ViewModel
             {
                 Id = transmittalModel.Id;
                 IssueToWorkshop = transmittalModel.IssueToWorkshop;
-                Recipients = transmittalModel.Recipients;
+                //Recipients = transmittalModel.Recipients;
+                //TODO Update Recipients
                 SentDate = transmittalModel.SentDate;
                 IssueType = transmittalModel.IssueType;
                 TransmittalStatus = transmittalModel.TransmittalStatus;
@@ -167,10 +172,17 @@ namespace TransmittalManager.ViewModel
                 }
             }
             else
-            {               
+            {
                 CreatedBy = transmittalModel.CreatedBy;
                 TransmittalStatus = TransmittalStatus.Preparing;
             }
+
+
+            if (!transmittalModel.IsLoadedFromDb) ViewStatus &= ViewStatusTypes.LoadedDb;
+            if (User.ActiveUser.Group == Groups.NoPermisions) ViewStatus &= ViewStatusTypes.ViewOnly;
+            if (TransmittalStatus == TransmittalStatus.Issued) ViewStatus &= ViewStatusTypes.Approved;
+
+            if (!ViewStatus.HasFlag(ViewStatusTypes.ViewOnly) && !ViewStatus.HasFlag(ViewStatusTypes.Approved)) ViewStatus &= ViewStatusTypes.Editable; //Otherwise it should be editable.
         }
 
         /// <summary>
@@ -228,26 +240,66 @@ namespace TransmittalManager.ViewModel
 
         #region Commands
 
-        private bool cancel;
 
+
+        public RelayCommand OkayCommand { get; }
+        public RelayCommand CancelCommand { get; }
+
+        public RelayCommand AddFileCommand { get; }
+        public RelayCommand RemoveFileCommand { get; }
+        public RelayCommand EditRecipientsCommand { get; }
+
+
+        public string OkayText
+        {
+            get {
+
+                switch (ButtonViewType)
+                {
+
+                    case ButtonType.Approval:
+                        return "Submit to PM";
+                    case ButtonType.Submit:
+                        return "Issue";
+                    case ButtonType.Cancel:
+                    default: return "Close";
+                }
+            }
+        }
         private void OkayCommandExecute()
         {
-            cancel = false;
-            RequestToClose?.Invoke(this, null);
+            switch (ButtonViewType)
+            {
+                case ButtonType.Approval:
+                case ButtonType.Submit:
+                    RequestToClose?.Invoke(this, CloseReason.ToSave);
+                    break;
+
+                case ButtonType.Cancel:
+                    RequestToClose?.Invoke(this, CloseReason.Cancel);
+                    break;
+                default:
+                    RequestToClose?.Invoke(this, CloseReason.Unknown);
+                    break;
+            }
         }
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         private bool OkayCommandCanExecute()
         {
+            if (ButtonViewType == ButtonType.Cancel) return true;
+
+            //Verify data
             if (Files.Count == 0) return false;
             if (Project == null) return false;
             if (IssueType == 0) return false;
+
             return true;
         }
 
         private void CancelCommandExecute()
         {
-            cancel = true;
-            RequestToClose?.Invoke(this, null);
+            // cancel = true;
+            RequestToClose?.Invoke(this, CloseReason.Cancel);
         }
         [DebuggerStepThrough]
         private bool CancelCommandCanExecute() => true;
@@ -257,16 +309,6 @@ namespace TransmittalManager.ViewModel
         {
             return IsEnabled;
         }
-        private bool FileRemoveCanExecute()
-        {
-            return IsEnabled && Files.SelectedItem != null;
-        }
-        private void RemoveFileExecute()
-        {
-            if (Files.SelectedItem != null)
-                Files.Remove(Files.SelectedItem);
-        }
-
         private void AddFileExecute()
         {
 #if BlockPDM
@@ -354,22 +396,48 @@ namespace TransmittalManager.ViewModel
             //}
 #endif
         }
+        [DebuggerStepThrough]
+        private bool FileRemoveCanExecute()
+        {
+            return IsEnabled && Files.SelectedItem != null;
+        }
+        private void RemoveFileExecute()
+        {
+            if (Files.SelectedItem != null)
+                Files.Remove(Files.SelectedItem);
+        }
+
+        [DebuggerStepThrough]
+        private bool EditRecipientCanExecute()
+        {
+            return ButtonViewType == ButtonType.Approval || ButtonViewType == ButtonType.Submit;
+        }
+        private void EditRecipientExecute()
+        {
+            ViewOverlay = Recipients;
+            //Recipients.RequestToClose
+        }
         #endregion
 
-        public bool? Closing()
+        public CloseReaction Closing()
         {
-            if (cancel) return false;
+            //if (cancel) return false;
+            if (!IsEnabled) return CloseReaction.ProccedClose;
             MessageBoxResult res = MessageBox.Show("Save?", "Save changes", MessageBoxButton.YesNoCancel);
             System.Threading.Tasks.Task<bool> a;
             if (res == MessageBoxResult.Yes)
+            {
                 a = transmittalModel.Save(this);
+                return CloseReaction.ProccedClose;
+            }
             else if (res == MessageBoxResult.No)
-                if (res == MessageBoxResult.Cancel)
-                    return true;
-            return false;
+                return CloseReaction.ProccedClose;
+            else if (res == MessageBoxResult.Cancel)
+                return CloseReaction.CancelClose;
+            return CloseReaction.ProccedClose;
         }
 
-        public event EventHandler RequestToClose;
+        public event DockingAdapterMVVM.CloseEventHandler RequestToClose;
 
         public string Header { get; set; } = "Trans";
         public DockingAdapterMVVM.DockState State { get; set; } = DockState.Document;
@@ -426,5 +494,22 @@ namespace TransmittalManager.ViewModel
         }
 
         #endregion
+
+        [Flags]
+        public enum ViewStatusTypes
+        {
+            NewlyCreated = 1,
+            LoadedDb = 2,
+            Editable = 4,
+            ViewOnly = 8,
+            Wait4Approval = 16,
+            Approved = 32
+        }
+        public enum ButtonType
+        {
+            Cancel,
+            Approval,
+            Submit
+        }
     }
 }

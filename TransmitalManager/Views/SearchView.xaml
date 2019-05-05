@@ -104,7 +104,7 @@
             </i:Interaction.Triggers>
             <sf:SfTreeGrid.Columns>
                 <sf:TreeGridTextColumn HeaderText="Id" MappingName="Id"/>
-                <sf:TreeGridTextColumn HeaderText="Project Number" MappingName="ProjectNo"/>
+                <sf:TreeGridTextColumn HeaderText="Project Number" MappingName="Project"/>
                 <sf:TreeGridTextColumn HeaderText="Issue Type" MappingName="IssueBy"/>
                 <sf:TreeGridTextColumn HeaderText="Issued to Workshop" MappingName="IssueToWorkShop"/>
                 <sf:TreeGridDateTimeColumn HeaderText="Date" MappingName="SentDate"/>

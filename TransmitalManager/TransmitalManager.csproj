@@ -89,14 +89,30 @@
       <HintPath>..\packages\PropertyChanged.Fody.2.6.0\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
+    <Reference Include="Syncfusion.Compression.Base, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.16.4.0.52\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Data.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.DocIO.Base, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Licensing, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.16.4.0.52\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.Wpf.16.4.0.52\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PdfViewer.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.PdfViewer.WPF.16.4.0.52\lib\net46\Syncfusion.PdfViewer.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.SfRichTextBoxAdv.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfSkinManager.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Shared.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Shared.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.WPF.16.4.0.52\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Themes.Metro.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Tools.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Tools.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.WPF.16.4.0.52\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -130,14 +146,19 @@
     <Compile Include="Converters\ConnectionException.cs" />
     <Compile Include="Converters\IssueTypeConverter.cs" />
     <Compile Include="Converters\ProjectToString.cs" />
+    <Compile Include="Converters\RecipientsSelectionToStringConverter.cs" />
+    <Compile Include="Converters\SelectedItemGroupConverter.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="GekkoVaultDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GekkoVaultDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICloseable.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Publisher.cs" />
+    <Compile Include="Models\Recipients.cs" />
     <Compile Include="Models\TransmitalManager.cs" />
     <Compile Include="Models\Transmittal.cs" />
     <SplashScreen Include="Views\LoadingSplashScreen.png" />
@@ -165,6 +186,8 @@
     <None Include="SQL Queries\GetAllTransmittals.sql" />
     <None Include="SQL Queries\AddFilesToTransmittal.sql" />
     <None Include="SQL Queries\GetAllProjects.sql" />
+    <Content Include="SQL Queries\GetAllCompanies.sql" />
+    <Content Include="SQL Queries\GetAllRecipients.sql" />
     <Content Include="SQL Queries\GetAllUsers.sql" />
     <Content Include="SQL Queries\GetTransmitalsFileName.sql" />
     <Compile Include="Models\User.cs" />
@@ -175,14 +198,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SqlScripts.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\DocumentCollectionViewModel.cs" />
     <Compile Include="ViewModel\FileDataViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\RecipientsSelectionViewModel.cs" />
+    <Compile Include="ViewModel\RecipientsViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\TransmitalViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\FileDisplayView.xaml.cs">
       <DependentUpon>FileDisplayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecipientSelction.xaml.cs">
+      <DependentUpon>RecipientSelction.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransmittalView.xaml.cs">
       <DependentUpon>TransmittalView.xaml</DependentUpon>
@@ -205,6 +234,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\FileDisplayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecipientSelction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,9 +281,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>

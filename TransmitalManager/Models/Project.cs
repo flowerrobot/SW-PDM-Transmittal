@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TransmittalManager.Models
@@ -21,13 +22,14 @@ namespace TransmittalManager.Models
             get {
                 if (_projects != null) return _projects;
 
-               var a= AllProjectsAsync();
+                CancellationTokenSource ctk = new CancellationTokenSource();
+               var a= AllProjectsAsync(ctk.Token);
                 a.Wait();
                 return _projects;
             }
         }
 
-        public static async Task<List<Project>> AllProjectsAsync()
+        public static async Task<List<Project>> AllProjectsAsync(CancellationToken cts)
         {
             if (_projects != null) return _projects;
             try
@@ -38,7 +40,7 @@ namespace TransmittalManager.Models
                 string query = string.Format(SQL_Queries.SqlScripts.GetAllProjects);
                 using (SqlConnection connection = new SqlConnection(TransmitalManager.connString))
                 {
-                    var t = connection.OpenAsync();
+                    var t = connection.OpenAsync(cts);
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         _projects = new List<Project>();
@@ -47,9 +49,9 @@ namespace TransmittalManager.Models
                         _projects.Add(new Project() { Name = "Another Project", Number = 005678 });
 
                         await t;
-                        var reader = await command.ExecuteReaderAsync();
+                        var reader = await command.ExecuteReaderAsync(cts);
 
-                        while (await reader.ReadAsync())
+                        while (await reader.ReadAsync(cts) && !cts.IsCancellationRequested)
                         {
                             _projects.Add(new Project() { Number = (int)reader["ProjNumber"], Name = (string)reader["ProjName"] });
                         }

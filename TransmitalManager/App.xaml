@@ -36,5 +36,17 @@
                 <views:FileDisplayView/>
             </Grid>
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type viewModel:DocumentCollectionViewModel}">
+            <Grid>
+                <views:FileDisplayView/>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type viewModel:RecipientsSelectionViewModel}">
+            <Grid>
+                <views:RecipientSelction/>
+            </Grid>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -14,6 +14,7 @@
 
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using System.Collections.Generic;
 using TransmittalManager.Models;
 
 namespace TransmittalManager.ViewModel
@@ -27,6 +28,7 @@ namespace TransmittalManager.ViewModel
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
+        [PreferredConstructor]
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -46,6 +48,7 @@ namespace TransmittalManager.ViewModel
             SimpleIoc.Default.Register<TransmittalViewModel>();
             SimpleIoc.Default.Register<SearchViewModel>();
             SimpleIoc.Default.Register<DocumentCollectionViewModel>();
+            //SimpleIoc.Default.Register<List<RecipientViewModel>>();
         }
 
         private MainViewModel mv;
@@ -69,10 +72,32 @@ namespace TransmittalManager.ViewModel
                 FileDataViewModel i1 = new FileDataViewModel(new Document() { Description = "Hi", Revision = "0", FileState = "Released" });
 
                 fd.Add(i1);
-             //  fd.Add(new FileDataViewModel { Name = "two" });
+                //  fd.Add(new FileDataViewModel { Name = "two" });
                 return fd;
 #endif
 
+            }
+        }
+
+        public RecipientsSelectionViewModel Recipients
+        {
+            get {
+                var a =new RecipientsSelectionViewModel();
+#if DEBUG
+                
+                a.AllRecipients.Add(new RecipientViewModel(new Recipient() { Name = "Hello" }));
+                a.AllRecipients.Add(new RecipientViewModel(new Recipient { Name = "Hello1", Email = "lol@" }));
+                a.AllRecipients.Add(new RecipientViewModel(new Recipient { Name = "Hello2", Email = "lol" }){ IsSelected = true});
+
+//#else
+
+                foreach(var r in Recipient.AllRecipients)
+                {
+                    a.AllRecipients.Add( new RecipientViewModel(r));
+                }
+#endif
+
+                return a;
             }
         }
 

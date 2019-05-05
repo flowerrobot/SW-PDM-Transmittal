@@ -80,12 +80,32 @@ namespace TransmittalManager.SQL_Queries {
         
         /// <summary>
         ///   Looks up a localized string similar to /****** Script for SelectTopNRows command from SSMS  ******/
+        ///SELECT *   FROM [mydefaultdb].[dbo].[Companies].
+        /// </summary>
+        internal static string GetAllCompanies {
+            get {
+                return ResourceManager.GetString("GetAllCompanies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /****** Script for SelectTopNRows command from SSMS  ******/
         ///SELECT [ProjNumber],[ProjName]
         ///  FROM [Projects].
         /// </summary>
         internal static string GetAllProjects {
             get {
                 return ResourceManager.GetString("GetAllProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /****** Script for SelectTopNRows command from SSMS  ******/
+        ///SELECT *   FROM [mydefaultdb].[dbo].[Recipients].
+        /// </summary>
+        internal static string GetAllRecipients {
+            get {
+                return ResourceManager.GetString("GetAllRecipients", resourceCulture);
             }
         }
         

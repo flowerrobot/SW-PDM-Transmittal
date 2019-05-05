@@ -120,14 +120,15 @@ namespace TransmittalManager.ViewModel
             }
         }
 
-        private void View_RequestToClose(object sender, System.EventArgs e)
+        private void View_RequestToClose(object sender, CloseReason Reason)
         {
             if (sender is IDockElement de)
             {
-                if (de.Closing() != true)
+                if (de.Closing() != CloseReaction.CancelClose)
                     Windows.Remove(de);
             }
         }
+
 
         public ObservableCollection<DockItem> DockCollection { get; } = new ObservableCollection<DockItem>();
 

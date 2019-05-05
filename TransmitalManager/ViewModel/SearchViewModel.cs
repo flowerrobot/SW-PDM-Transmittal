@@ -185,12 +185,12 @@ namespace TransmittalManager.ViewModel
         #endregion
 
 
-        public bool? Closing()
+        public CloseReaction Closing()
         {
-            return false;
+            return CloseReaction.ProccedClose;
         }
 
-        public event EventHandler RequestToClose;
+        public event CloseEventHandler RequestToClose;
 
 
         public string Header { get; set; } = "Search";

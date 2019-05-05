@@ -25,7 +25,8 @@ namespace TransmittalManager.Models
             get {
                 if (_activeUser != null) return _activeUser;
 
-                Task.Run(() => AllUsersAsync());
+                CancellationTokenSource ctk = new CancellationTokenSource();
+                Task.Run(() => AllUsersAsync(ctk.Token));
                 _activeUser = _allUsers?.Values.FirstOrDefault(t => t.UserName == Environment.UserName) ?? null;
                 if (_activeUser != null) return _activeUser;
 #if DEBUG
@@ -39,24 +40,24 @@ namespace TransmittalManager.Models
         }
 
         static Dictionary<int, User> _allUsers;
-        public static async Task<Dictionary<int, User>> AllUsersAsync()
+        public static async Task<Dictionary<int, User>> AllUsersAsync(CancellationToken ctk)
         {
             if (_allUsers != null) return _allUsers;
             try
             {
-                var ctk = new  CancellationTokenSource();
+                //var ctk = new  CancellationTokenSource();
                 //Load Users from database
                 string query = string.Format(SqlScripts.GetAllUsers, PDMDesigner, PDMIssuer);
                 using (SqlConnection connection = new SqlConnection(TransmitalManager.connPDMString))
                 {
-                    var t = connection.OpenAsync(ctk.Token);
+                    var t = connection.OpenAsync(ctk);
                     _allUsers = new Dictionary<int, User>();
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         await t;
-                        var reader = await command.ExecuteReaderAsync(ctk.Token);
+                        var reader = await command.ExecuteReaderAsync(ctk);
 
-                        while (await reader.ReadAsync(ctk.Token) && !ctk.IsCancellationRequested)
+                        while (await reader.ReadAsync(ctk) && !ctk.IsCancellationRequested)
                         {
                             int id = (int)reader["UserId"];
                             var grp = (string)reader["GroupName"];
@@ -93,11 +94,13 @@ namespace TransmittalManager.Models
 #endif
                 logger.Error(ex);
             }
+              _allUsers.Add(0,new User(0) { UserName = Environment.UserName, Group = Groups.Designer | Groups.ProjectManager });
             return _allUsers;
         }
         public static Dictionary<int, User> AllUsers()
         {
-            return AllUsersAsync().Result;
+            CancellationTokenSource ctk = new CancellationTokenSource();
+            return AllUsersAsync(ctk.Token).Result;
         }
 
 

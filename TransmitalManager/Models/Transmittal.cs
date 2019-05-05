@@ -40,10 +40,10 @@ namespace TransmittalManager.Models
                 int crById = (int)reader["CreatedBy"];
                 CreatedBy = User.AllUsers()[crById];
 
-                int issById = (int)reader["IssueBy"];
-                if (issById == 0)
+                object issById = reader["IssueBy"];
+                if (issById != null && issById is int iss)
                 {
-                    IssueBy = User.AllUsers()[crById];
+                    IssueBy = User.AllUsers()[(int)iss];
                 }
 
                 Comments = reader["Comments"]?.ToString();
@@ -72,8 +72,8 @@ namespace TransmittalManager.Models
         public string WorkShopJtsk { get; set; }
 
 
-        public string Recipients { get; set; } = "Test";
-        public DateTime SentDate { get; set; }
+        public List<Recipient> Recipients { get; }
+        public DateTime? SentDate { get; set; }
         public IssueType IssueType { get; set; }
         public TransmittalStatus TransmittalStatus { get; set; }
         public string Comments { get; set; }
@@ -125,7 +125,8 @@ namespace TransmittalManager.Models
                 {
                     string updates = "";
                     if (vm.IssueToWorkshop != IssueToWorkshop) updates += $"ToWorkShop = {Convert.ToInt32(vm.IssueToWorkshop)}";
-                    if (vm.Recipients != Recipients) updates += $"Recipients = {vm.Recipients}";
+                    //if (vm.Recipients != Recipients) updates += $"Recipients = {vm.Recipients}";
+                    //TODO fix recipients
                     if (vm.IssueType != IssueType) updates += $"IssueType = {vm.IssueType}";
                     if (vm.TransmittalStatus != TransmittalStatus) updates += $"Status = {vm.TransmittalStatus}";
                     if (vm.Comments != Comments) updates += $"Comments = {vm.Comments}";
@@ -175,7 +176,8 @@ namespace TransmittalManager.Models
 
 
                         updates.Add("ToWorkShop", Convert.ToInt32(vm.IssueToWorkshop).ToString());
-                        if (!string.IsNullOrEmpty(vm.Recipients)) updates.Add("Recipients", "'" + vm.Recipients + "'");
+                        //if (!string.IsNullOrEmpty(vm.Recipients)) updates.Add("Recipients", "'" + vm.Recipients + "'");
+                        //TODO fix recipients
                         updates.Add("IssueType", ((int)vm.IssueType).ToString());
                         updates.Add("Status", ((int)vm.TransmittalStatus).ToString());
                         if (!string.IsNullOrEmpty(vm.Comments)) updates.Add("Comments", "'" + vm.Comments + "'");
@@ -254,7 +256,7 @@ namespace TransmittalManager.Models
                  string FilledComment = Comments;
                  FilledComment = FilledComment.Replace("<status>", IssueType.ToString());
                  FilledComment = FilledComment.Replace("<issuer>", IssueBy.Id.ToString());
-                 FilledComment = FilledComment.Replace("<issueDate>", SentDate.ToString("d"));
+                 FilledComment = FilledComment.Replace("<issueDate>", SentDate?.ToString("d"));
 
                 //ToDo
                 //PDFs -> or one drive link if file size is to large
