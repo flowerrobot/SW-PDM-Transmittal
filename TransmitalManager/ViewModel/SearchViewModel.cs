@@ -185,10 +185,11 @@ namespace TransmittalManager.ViewModel
         #endregion
 
 
-        public CloseReaction Closing()
+        public CloseReaction Closing(CloseReason reaction)
         {
             return CloseReaction.ProccedClose;
         }
+
 
         public event CloseEventHandler RequestToClose;
 

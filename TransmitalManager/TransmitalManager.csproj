@@ -189,10 +189,14 @@
     <Content Include="SQL Queries\GetAllCompanies.sql" />
     <Content Include="SQL Queries\GetAllRecipients.sql" />
     <Content Include="SQL Queries\GetAllUsers.sql" />
+    <Content Include="SQL Queries\GetTransmitalRecipients.sql" />
     <Content Include="SQL Queries\GetTransmitalsFileName.sql" />
     <Compile Include="Models\User.cs" />
     <Content Include="SQL Queries\db tables\Create Companies.sql" />
     <Content Include="SQL Queries\db tables\Create Recipients.sql" />
+    <Content Include="SQL Queries\db tables\Create TransmitalRecipients.sql" />
+    <Content Include="SQL Queries\AddTransmitalRecipients.sql" />
+    <Content Include="SQL Queries\DeleteTransmitalRecipients.sql" />
     <Compile Include="SQL Queries\SqlScripts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

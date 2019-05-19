@@ -35,7 +35,7 @@ namespace DockingAdapterMVVM
         /// Called when about to close, return true to cancel
         /// </summary>
         /// <returns></returns>
-        CloseReaction Closing();
+        CloseReaction Closing(CloseReason reason);
 
         /// <summary>
         /// Raise this event if the dialog will close

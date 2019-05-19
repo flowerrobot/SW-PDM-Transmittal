@@ -121,6 +121,12 @@
   <data name="AddFilesToTransmittal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>AddFilesToTransmittal.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="AddTransmitalRecipients" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>AddTransmitalRecipients.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="DeleteTransmitalRecipients" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>DeleteTransmitalRecipients.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="GetAllCompanies" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GetAllCompanies.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
@@ -135,6 +141,9 @@
   </data>
   <data name="GetAllUsers" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GetAllUsers.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+  </data>
+  <data name="GetTransmitalRecipients" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GetTransmitalRecipients.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="GetTransmitalsFileName" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GetTransmitalsFileName.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

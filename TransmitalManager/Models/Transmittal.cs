@@ -21,7 +21,6 @@ namespace TransmittalManager.Models
 
             CreatedBy = User.ActiveUser;
         }
-
         public Transmittal(SqlDataReader reader)
         {
             try
@@ -33,10 +32,11 @@ namespace TransmittalManager.Models
                 {
                     Project = TransmittalManager.Models.Project.AllProjects.FirstOrDefault(t => t.Number == proId);
                 }
-                Recipients = reader["Recipients"].ToString();
-                //  SentDate = reader["SentDate"] as DateTime; //TODO fix
-                //IssueBy = reader["IssueBy"]?.ToString();
-                //CreatedBy = reader["CreatedBy"]?.ToString();
+                //Recipients = reader["Recipients"].ToString();
+                //SentDate = reader["SentDate"] as DateTime; 
+                object test = reader["SentDate"] ; 
+                //TODO fix sent date
+
                 int crById = (int)reader["CreatedBy"];
                 CreatedBy = User.AllUsers()[crById];
 
@@ -62,7 +62,7 @@ namespace TransmittalManager.Models
 
 
         public bool IsLoadedFromDb => Id != null;
-        public bool FilesLoad { get; set; }
+        public bool ExtendedDataLoaded { get; set; }
 
 
         public int? Id { get; set; }
@@ -83,9 +83,10 @@ namespace TransmittalManager.Models
 
 
         public List<Document> Files { get; set; } = new List<Document>();
-        public async Task<List<Document>> LoadFilesAsync(IProgress<Document> e, CancellationToken cancellationToken)
+        public async Task<bool> LoadExtendedDataAsync(IProgress<Document> e, CancellationToken cancellationToken)
         {
-            if (IsLoadedFromDb != true) return null; //its not from the database so nothing to load
+            if (IsLoadedFromDb != true) return true; //its not from the database so nothing to load
+
             List<Document> docs = new List<Document>();
             using (SqlConnection connection = new SqlConnection(TransmitalManager.connString))
             {
@@ -93,6 +94,7 @@ namespace TransmittalManager.Models
                 SqlCommand command = new SqlCommand(query, connection);
                 await connection.OpenAsync();
 
+                //***** Load recipients *****
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -104,29 +106,66 @@ namespace TransmittalManager.Models
                         {
                             reader.Close();
                             connection.Close();
-                            return docs;
+                            return false;
                         }
                     }
                 }
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    connection.Close();
+                    return false;
+                }
+
+                //***** Get Recipients *****
+                query = string.Format(SqlScripts.GetTransmitalRecipients, Id);
+                command = new SqlCommand(query, connection);
+
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        int Id = (int)reader["RecipientId"];
+                        Recipient file = Recipient.AllRecipients.FirstOrDefault(t => t.Id == Id);
+                        if (file != null)
+                            Recipients.Add(file);
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            reader.Close();
+                            connection.Close();
+                            return false;
+                        }
+                    }
+                }
+
+
             }
 
-            FilesLoad = true;
-            return docs;
+            ExtendedDataLoaded = true;
+            return true;
         }
 
-        public async Task<bool> Save(TransmittalViewModel vm)
+
+         
+        public async Task<bool> Save(TransmittalViewModel vm,bool UpdateToIssued)
         {
+            if (UpdateToIssued)
+            {
+                TransmittalStatus = TransmittalStatus.Issued;
+                SentDate = DateTime.Today;
+            }
+
             using (SqlConnection connection = new SqlConnection(TransmitalManager.connString))
             {
                 Task cmd = connection.OpenAsync();
                 Task<int> t;
+                
 
                 if (IsLoadedFromDb)///update
                 {
                     string updates = "";
                     if (vm.IssueToWorkshop != IssueToWorkshop) updates += $"ToWorkShop = {Convert.ToInt32(vm.IssueToWorkshop)}";
-                    //if (vm.Recipients != Recipients) updates += $"Recipients = {vm.Recipients}";
-                    //TODO fix recipients
                     if (vm.IssueType != IssueType) updates += $"IssueType = {vm.IssueType}";
                     if (vm.TransmittalStatus != TransmittalStatus) updates += $"Status = {vm.TransmittalStatus}";
                     if (vm.Comments != Comments) updates += $"Comments = {vm.Comments}";
@@ -140,6 +179,17 @@ namespace TransmittalManager.Models
                     await cmd;
                     t = command.ExecuteNonQueryAsync();
 
+
+                    ///**** Update Transmittal Recipients *****
+                    
+                    //TODO Not remove all recipients, check if they need to be removed to stop thrashing.
+                    query = string.Format(SqlScripts.DeleteTransmitalRecipients, Id);  //Remove all recipients  
+                    Task<int> rr =  new SqlCommand(query, connection).ExecuteNonQueryAsync();
+                    await rr;                    
+                    //Add them
+                    Parallel.ForEach(Recipients, async rec => await new SqlCommand(string.Format(SqlScripts.AddTransmitalRecipients, Id, rec.Id), connection).ExecuteNonQueryAsync());
+
+                    //**** Update Files Lists ****
                     List<Document> toRemove = Files.ToArray().ToList();
                     List<FileDataViewModel> toAdd = new List<FileDataViewModel>();
 
@@ -176,8 +226,6 @@ namespace TransmittalManager.Models
 
 
                         updates.Add("ToWorkShop", Convert.ToInt32(vm.IssueToWorkshop).ToString());
-                        //if (!string.IsNullOrEmpty(vm.Recipients)) updates.Add("Recipients", "'" + vm.Recipients + "'");
-                        //TODO fix recipients
                         updates.Add("IssueType", ((int)vm.IssueType).ToString());
                         updates.Add("Status", ((int)vm.TransmittalStatus).ToString());
                         if (!string.IsNullOrEmpty(vm.Comments)) updates.Add("Comments", "'" + vm.Comments + "'");
@@ -201,8 +249,9 @@ namespace TransmittalManager.Models
                         SqlCommand command = new SqlCommand(query, connection);
                         await cmd;
 
-
+                        //Get id from new added record
                         object id = await command.ExecuteScalarAsync();
+
                         if (id is decimal d)
                             Id = Convert.ToInt32(d);
                         else if (id is int i)
@@ -211,6 +260,11 @@ namespace TransmittalManager.Models
                         if (Id != null)
                         {
 
+
+                            ///**** Add Transmittal Recipients *****                                              
+                            Parallel.ForEach(Recipients, async rec => await new SqlCommand(string.Format(SqlScripts.AddTransmitalRecipients, Id, rec.Id), connection).ExecuteNonQueryAsync());
+
+                             //**** Update Files Lists ****
                             foreach (var doc in vm.Files)
                             {
                                 doc.Model.TransmittalId = Id ?? 1;
@@ -244,27 +298,5 @@ namespace TransmittalManager.Models
             }
         }
 
-        public async Task<bool> Sent(TransmittalViewModel vm)
-        {
-            return await Task.Run(() =>
-             {
-                 TransmittalStatus = TransmittalStatus.Issued;
-                 SentDate = DateTime.Today;
-
-
-
-                 string FilledComment = Comments;
-                 FilledComment = FilledComment.Replace("<status>", IssueType.ToString());
-                 FilledComment = FilledComment.Replace("<issuer>", IssueBy.Id.ToString());
-                 FilledComment = FilledComment.Replace("<issueDate>", SentDate?.ToString("d"));
-
-                //ToDo
-                //PDFs -> or one drive link if file size is to large
-                //Transmital Excel file
-                //Send file
-                return false;
-
-             });
-        }
     }
 }

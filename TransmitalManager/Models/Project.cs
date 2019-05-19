@@ -44,10 +44,10 @@ namespace TransmittalManager.Models
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         _projects = new List<Project>();
-                        //TODO load projects from database
+#if DEBUG 
                         _projects.Add(new Project() { Name = "Test Proj", Number = 001234 });
                         _projects.Add(new Project() { Name = "Another Project", Number = 005678 });
-
+#endif
                         await t;
                         var reader = await command.ExecuteReaderAsync(cts);
 

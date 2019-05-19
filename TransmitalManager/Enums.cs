@@ -14,6 +14,9 @@ namespace TransmittalManager
         Outdated
     }
 
+    /// <summary>
+    /// Document issue reason
+    /// </summary>
     public enum IssueType : int
     {
         Unknown,
@@ -24,6 +27,9 @@ namespace TransmittalManager
         ForMaterialTakeOff
     }
 
+    /// <summary>
+    /// Current state the transmitallae is in
+    /// </summary>
     public enum TransmittalStatus : int
     {
         Unknown,
@@ -33,6 +39,9 @@ namespace TransmittalManager
         Received
     }
 
+    /// <summary>
+    /// Represents the permision groups in the app
+    /// </summary>
     [Flags]
     public enum Groups
     {
@@ -40,4 +49,10 @@ namespace TransmittalManager
         Designer = 2,
         ProjectManager = 4
     }
+
+    public enum CloseType
+    {
+
+    }
+
 }

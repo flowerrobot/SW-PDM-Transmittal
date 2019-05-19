@@ -41,7 +41,6 @@ namespace TransmittalManager.ViewModel
         public Project Project { get; set; }
 
 
-        private bool filesLoaded;
         private DocumentCollectionViewModel files = new DocumentCollectionViewModel();
         /// <summary>
         /// THe collection of files, If not loaded it will return an empty collection while it loads, then send a proptery change notify event to say its updated
@@ -49,7 +48,7 @@ namespace TransmittalManager.ViewModel
         public DocumentCollectionViewModel Files
         {
             get {
-                if (!filesLoaded)
+                if (!transmittalModel.ExtendedDataLoaded)
                     if (!Bgw.IsBusy)
                         Bgw.RunWorkerAsync(); //Load files async, the rely on property notify to say its uploaded
 
@@ -61,7 +60,6 @@ namespace TransmittalManager.ViewModel
                 if (value != null)
                 {
                     files = value;
-                    filesLoaded = true;
                 }
             }
         }
@@ -131,8 +129,6 @@ namespace TransmittalManager.ViewModel
 
             transmittalModel = new Transmittal();
             TransmittalStatus = TransmittalStatus.Preparing;
-            //Projects = new List<string>();
-            //Models.Projects.AllProjects.ForEach(t => Projects.Add($"{t.Number} {t.Name}"));
             files = new DocumentCollectionViewModel();
 
             ViewStatus = ViewStatusTypes.NewlyCreated & ViewStatusTypes.Editable;
@@ -148,15 +144,12 @@ namespace TransmittalManager.ViewModel
             pg = new Progress<Document>(DocsUpdated);
             transmittalModel = transmittal;
 
-            //Projects = new List<string>();
-            //Models.Projects.AllProjects.ForEach(t => Projects.Add($"{t.Number} {t.Name}"));
 
             if (transmittalModel.IsLoadedFromDb)
             {
                 Id = transmittalModel.Id;
                 IssueToWorkshop = transmittalModel.IssueToWorkshop;
-                //Recipients = transmittalModel.Recipients;
-                //TODO Update Recipients
+
                 SentDate = transmittalModel.SentDate;
                 IssueType = transmittalModel.IssueType;
                 TransmittalStatus = transmittalModel.TransmittalStatus;
@@ -165,10 +158,11 @@ namespace TransmittalManager.ViewModel
                 CreatedBy = transmittalModel.CreatedBy;
                 Project = transmittalModel.Project;
 
-                if (transmittalModel.FilesLoad)
+                if (transmittalModel.ExtendedDataLoaded)
                 {
-                    filesLoaded = true;
                     transmittalModel.Files.ForEach(f => files.Add(new FileDataViewModel(f)));
+
+                    Recipients = new RecipientsSelectionViewModel(transmittalModel.Recipients);
                 }
             }
             else
@@ -185,48 +179,49 @@ namespace TransmittalManager.ViewModel
             if (!ViewStatus.HasFlag(ViewStatusTypes.ViewOnly) && !ViewStatus.HasFlag(ViewStatusTypes.Approved)) ViewStatus &= ViewStatusTypes.Editable; //Otherwise it should be editable.
         }
 
-        /// <summary>
-        /// Load files if can, used when showing the main form
-        /// </summary>
-        public List<FileDataViewModel> LoadFiles(CancellationToken cts)
-        {
-            if (transmittalModel?.FilesLoad ?? true) return null;
-            Task<List<Document>> t = transmittalModel.LoadFilesAsync(null, cts);
 
-            List<FileDataViewModel> vv = new List<FileDataViewModel>();
-            t.Wait(cts);
-            if (t.Result == null) return null;
-            foreach (Document v in t.Result)
+        ImportedData? ImportExtendedData()
+        {
+            if (!transmittalModel.ExtendedDataLoaded) return null;
+
+            var iEd = new ImportedData();
+            iEd.files = new List<FileDataViewModel>();
+            iEd.recipients = new List<Recipient>();
+
+            foreach (Document v in transmittalModel.Files)
             {
-                vv.Add(new FileDataViewModel(v));
+                iEd.files.Add(new FileDataViewModel(v));
             }
 
-            return vv;
-        }
+            foreach (var r in transmittalModel.Recipients)
+            {
+                iEd.recipients.Add(r);
+            }
 
+            return iEd;
+        }
         private CancellationTokenSource cts;
         /// <summary>
         /// Loads files async, but does not add them to the collection.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<FileDataViewModel>> LoadFilesAsync(CancellationToken cts)
+        public async Task<ImportedData?> LoadFilesAsync(CancellationToken cts)
         {
 
             if (cts == null) cts = new CancellationTokenSource().Token;
 
-            if (transmittalModel?.FilesLoad ?? true) return null;
-            Task<List<Document>> t = transmittalModel.LoadFilesAsync(null, cts);
+            if (transmittalModel?.ExtendedDataLoaded ?? true) return null;
+            var t = transmittalModel.LoadExtendedDataAsync(null, cts);
 
-            List<FileDataViewModel> vv = new List<FileDataViewModel>();
+            //List<FileDataViewModel> vv = new List<FileDataViewModel>();
             await t;
 
-            if (t.Result == null) return null;
-            foreach (Document v in t.Result)
-            {
-                vv.Add(new FileDataViewModel(v));
-            }
-
-            return vv;
+            return ImportExtendedData();
+            //if (t.Result == null) return null;
+            //foreach (Document v in t.Result)
+            //{
+            //    vv.Add(new FileDataViewModel(v));
+            //}
         }
 
         /// <summary>
@@ -419,15 +414,22 @@ namespace TransmittalManager.ViewModel
         }
         #endregion
 
-        public CloseReaction Closing()
+        public CloseReaction Closing(CloseReason reason)
         {
-            //if (cancel) return false;
+            //IF form wasn't editable they just close
             if (!IsEnabled) return CloseReaction.ProccedClose;
+            if (reason == CloseReason.Cancel) return CloseReaction.ProccedClose; //this should be the same
+
             MessageBoxResult res = MessageBox.Show("Save?", "Save changes", MessageBoxButton.YesNoCancel);
             System.Threading.Tasks.Task<bool> a;
             if (res == MessageBoxResult.Yes)
             {
-                a = transmittalModel.Save(this);
+                if (ButtonViewType == ButtonType.Submit && (reason == CloseReason.Close || reason == CloseReason.Other))
+                {
+                    a = transmittalModel.Save(this, true);
+                }
+                else
+                { a = transmittalModel.Save(this, false); }
                 return CloseReaction.ProccedClose;
             }
             else if (res == MessageBoxResult.No)
@@ -474,18 +476,12 @@ namespace TransmittalManager.ViewModel
 
         private void BgwOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Result is List<FileDataViewModel> fi)
+            if (e.Result is ImportedData fi)
             {
-                Files = new DocumentCollectionViewModel(fi);
-                //List<FileDataViewModel> vv = new List<FileDataViewModel>();
-                //foreach (Document v in fi)
-                //{
-                //    vv.Add(new FileDataViewModel(v));
-                //}
 
+                Files = new DocumentCollectionViewModel(fi.files);
+                Recipients = new RecipientsSelectionViewModel(fi.recipients);
             }
-
-            filesLoaded = true;
         }
 
         private void BgwOnProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -511,5 +507,12 @@ namespace TransmittalManager.ViewModel
             Approval,
             Submit
         }
+    }
+
+
+    public struct ImportedData
+    {
+        public List<Recipient> recipients;
+        public List<FileDataViewModel> files;
     }
 }

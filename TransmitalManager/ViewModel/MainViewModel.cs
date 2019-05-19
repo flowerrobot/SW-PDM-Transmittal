@@ -124,7 +124,7 @@ namespace TransmittalManager.ViewModel
         {
             if (sender is IDockElement de)
             {
-                if (de.Closing() != CloseReaction.CancelClose)
+                if (de.Closing(Reason) != CloseReaction.CancelClose)
                     Windows.Remove(de);
             }
         }

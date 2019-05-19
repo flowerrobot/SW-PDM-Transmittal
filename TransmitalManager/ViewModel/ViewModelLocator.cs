@@ -82,18 +82,18 @@ namespace TransmittalManager.ViewModel
         public RecipientsSelectionViewModel Recipients
         {
             get {
-                var a =new RecipientsSelectionViewModel();
+                var a = new RecipientsSelectionViewModel();
 #if DEBUG
-                
+
                 a.AllRecipients.Add(new RecipientViewModel(new Recipient() { Name = "Hello" }));
                 a.AllRecipients.Add(new RecipientViewModel(new Recipient { Name = "Hello1", Email = "lol@" }));
-                a.AllRecipients.Add(new RecipientViewModel(new Recipient { Name = "Hello2", Email = "lol" }){ IsSelected = true});
+                a.AllRecipients.Add(new RecipientViewModel(new Recipient { Name = "Hello2", Email = "lol" }) { IsSelected = true });
 
-//#else
+                //#else
 
-                foreach(var r in Recipient.AllRecipients)
+                foreach (var r in Recipient.AllRecipients)
                 {
-                    a.AllRecipients.Add( new RecipientViewModel(r));
+                    a.AllRecipients.Add(new RecipientViewModel(r));
                 }
 #endif
 
@@ -103,9 +103,6 @@ namespace TransmittalManager.ViewModel
 
         public SearchViewModel SearchView => new SearchViewModel();
 
-        public static void Cleanup()
-        {
-            // TODO Clear the ViewModels
-        }
+        public static void Cleanup() { }
     }
 }

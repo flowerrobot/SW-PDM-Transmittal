@@ -79,6 +79,27 @@ namespace TransmittalManager.SQL_Queries {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///insert into TransmitalRecipients (TransmitalId, RecipientsId)
+        ///values (@Tid, @Rid).
+        /// </summary>
+        internal static string AddTransmitalRecipients {
+            get {
+                return ResourceManager.GetString("AddTransmitalRecipients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to delete from TransmitalRecipients
+        ///where [TransmitalId] = {0}.
+        /// </summary>
+        internal static string DeleteTransmitalRecipients {
+            get {
+                return ResourceManager.GetString("DeleteTransmitalRecipients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /****** Script for SelectTopNRows command from SSMS  ******/
         ///SELECT *   FROM [mydefaultdb].[dbo].[Companies].
         /// </summary>
@@ -145,6 +166,20 @@ namespace TransmittalManager.SQL_Queries {
         internal static string GetAllUsers {
             get {
                 return ResourceManager.GetString("GetAllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///
+        ///select * 
+        ///from TransmitalRecipients TR
+        ///--inner join Recipient R on Tr.RecipientId = R.Id
+        ///where TR.TransmitalId = {0}.
+        /// </summary>
+        internal static string GetTransmitalRecipients {
+            get {
+                return ResourceManager.GetString("GetTransmitalRecipients", resourceCulture);
             }
         }
         
